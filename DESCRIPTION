@@ -1,0 +1,20 @@
+Package: TrueFX
+Type: Package
+Title: R API to TrueFX
+Version: 0.1.0
+Date: $Date$
+Author: Garrett See
+Maintainer: Garrett See <gsee000@gmail.com>
+Description: Connects R to TrueFX for free streaming real-time and historical
+    tick-by-tick market data for dealable interbank foreign exchange rates with
+    millisecond detail.
+License: GPL-3
+URL: http://www.truefx.com
+Depends:
+    R(>= 2.15.0)
+Imports:
+    XML
+Collate:
+    'TrueFX.R'
+    'TrueFXRef.R'
+    'TrueFX-package.R'

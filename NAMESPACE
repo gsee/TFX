@@ -1,0 +1,5 @@
+export(ConnectTrueFX)
+export(ParseTrueFX)
+export(QueryTrueFX)
+export(TrueFXRef)
+importFrom(XML,readHTMLTable)

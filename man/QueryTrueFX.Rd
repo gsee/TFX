@@ -1,0 +1,101 @@
+\name{ConnectTrueFX}
+\alias{ConnectTrueFX}
+\alias{QueryTrueFX}
+\title{Query TrueFX}
+\usage{
+  ConnectTrueFX(currency.pairs, username, password,
+    qualifier = "default", format, snapshot = FALSE)
+
+  QueryTrueFX(id, parse.response = TRUE, pretty = TRUE)
+}
+\arguments{
+  \item{currency.pairs}{character vector, or comma
+  delimited string of Symbols for FX pairs.  (e.g.
+  \dQuote{EUR/USD,AUD/USD}, or \code{c("EUR/USD",
+  "AUD/USD")})}
+
+  \item{username}{character.  A registered TrueFX user
+  name; required to establish an authenticated session.}
+
+  \item{password}{character. A registered TrueFX password;
+  required to establish an authenticated session}
+
+  \item{qualifier}{any string; required to establish an
+  authenticated session.  (\dQuote{default} by default)}
+
+  \item{format}{One of \dQuote{default}, \dQuote{csv}, or
+  \dQuote{html}.  Indicates the format for the HTTP
+  Response.}
+
+  \item{snapshot}{logical.  No incremental updates if
+  \code{TRUE}}
+
+  \item{id}{a \code{TFXid} object created by
+  \code{ConnectTrueFX}.}
+
+  \item{parse.response}{logical. Should the results be
+  passed through \code{ParseTrueFX} before returning?}
+
+  \item{pretty}{logical.  Passed to \code{ParseTrueFX}.
+  Indicates whether to format the parsed results and
+  convert to \code{data.frame}.  Ignored if
+  \code{parse.response} is not \code{TRUE}}
+}
+\value{
+  \code{ConnectTrueFX} returns a \code{TFXid} object that
+  is a TrueFX server-generated session ID returned with a
+  successful authenticated session request.  It is a colon
+  delimited string with username, password, qualifier, and
+  the time (in milliseconds) that the session was created.
+
+  \code{QueryTrueFX} returns the results of a TrueFX
+  request using \code{TFXid} object returned by
+  \code{ConnectTrueFX}
+}
+\description{
+  Create a session with TrueFX and request market data.
+}
+\details{
+  If no \code{currency.pairs} provided to
+  \code{ConnectTrueFX}, the 15 pairs for which TrueFX
+  offers historical data will be used.  Note that only the
+  first 10 of these are returned in an unauthenticated
+  session.
+
+  \code{ConnectTrueFX} will create a \code{TFXid} classed
+  object that can be used in calls to \code{QueryTrueFX} to
+  request market data.
+}
+\note{
+  the formal argument start with the same lowercase letter
+  as their corresponding TrueFX Market Data Web Query
+  Parameters
+}
+\examples{
+## Cannot run these because there may not be an internet connection
+\dontrun{
+QueryTrueFX()  #unauthenticated
+QueryTrueFX(pretty=FALSE)
+QueryTrueFX(parse=FALSE)
+
+## For authenticated session, you must have a username and password (it's free).
+## Use your username and passward instead of JSTrader and Ou812
+id <- ConnectTrueFX('EUR/USD,GBP/USD', username='JSTrader', password='Ou812')
+QueryTrueFX(id)
+QueryTrueFX(ConnectTrueFX(username='JSTrader', password='Ou812',
+                          format='csv'), parse=FALSE)
+
+QueryTrueFX(ConnectTrueFX(username='JSTrader', password='Ou812',
+                          format='html'), parse=FALSE)
+}
+}
+\author{
+  Garrett See
+}
+\references{
+  \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}
+}
+\seealso{
+  \code{\link{ParseTrueFX}}, \code{\link{TrueFXRef}}
+}
+
