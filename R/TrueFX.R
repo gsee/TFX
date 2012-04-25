@@ -8,9 +8,6 @@ ConnectTrueFX <- function(currency.pairs, username, password,
     warning("unrecognized format. Using default")
     format <- 'default'
   }
-  #if (!isTRUE(snapshot) && substr(snapshot, 1, 1) != "y") {
-  #  warning("ignoring snapshot argument as that is not yet implemented.")
-  #}
   if (missing(currency.pairs)) {
     ## If missing, use the 15 pairs for which TrueFX offers historical data
     currency.pairs <- c("EUR/USD", "USD/JPY", "GBP/USD", "EUR/GBP", "USD/CHF", 
@@ -34,8 +31,8 @@ ConnectTrueFX <- function(currency.pairs, username, password,
     if (format != 'default') {
       URL <- paste0(URL, "&f=", format)
     }
-    if (!isTRUE(snapshot) && tolower(substr(snapshot, 1, 1)) != "y") {
-      URL <- paste0(URL, "&s=n")
+    if (isTRUE(snapshot) || tolower(substr(snapshot, 1, 1)) == "y") {
+      URL <- paste0(URL, "&s=y")
     }
     structure(readLines(URL), class='TFXid')#returns the session id
   }
@@ -70,7 +67,7 @@ DisconnectTrueFX <- function(id) {
 #' used in calls to \code{QueryTrueFX} to request market data.
 #' 
 #' @param currency.pairs character vector, or comma delimited string of Symbols
-#'   for FX pairs.  (e.g. \dQuote{EUR/USD,AUD/USD}, or 
+#'   (ISO names) of currency pairs.  (e.g. \dQuote{EUR/USD,AUD/USD}, or 
 #'   \code{c("EUR/USD", "AUD/USD")})
 #' @param username character.  A registered TrueFX user name; required to 
 #'   establish an authenticated session.
@@ -196,7 +193,7 @@ ParseTrueFX <- function(x, pretty=TRUE) {
     as.numeric(paste0(tmp, sprintf("%03s", as.numeric(pip))))
   }
   
-  if (x[length(x)] == "") {  # It's in csv format
+  if (grepl(",", x)) {  # It's in csv format
     if (!isTRUE(pretty)) {
       return(as.list(read.csv(text=x, header=FALSE, stringsAsFactors=FALSE, 
                               col.names = c("Symbol", "TimeStamp", 
@@ -209,14 +206,14 @@ ParseTrueFX <- function(x, pretty=TRUE) {
                       col.names = c("Symbol", "TimeStamp", "BidBigNumber", 
                                     "BidPip", "OfferBigNumber", "OfferPip", 
                                     "High", "Low", "Open"))
-      return(data.frame(
+      return(data.frame(Symbol = tmp[["Symbol"]],
         Bid.Price = PasteFigurePip(tmp[["BidBigNumber"]], tmp[["BidPip"]]),
         Ask.Price = PasteFigurePip(tmp[["OfferBigNumber"]], tmp[["OfferPip"]]),
         High = tmp[["High"]],
         Low = tmp[["Low"]],
         TimeStamp = as.POSIXct(as.numeric(tmp[["TimeStamp"]]) / 1000, 
                                origin='1970-01-01', tz='GMT'), 
-        row.names=tmp$Symbol, stringsAsFactors=FALSE))
+        stringsAsFactors=FALSE))
     }
   } else if (substr(x, 1, 7) == "<table>") { # It's an HTML table
     out <- readHTMLTable(x, as.data.frame=FALSE)[[1]]
@@ -225,7 +222,8 @@ ParseTrueFX <- function(x, pretty=TRUE) {
     if (!isTRUE(pretty)) {
       return(out)
     } else {
-      return(data.frame(Bid.Price=as.numeric(paste0(out[["BidBigNumber"]],
+      return(data.frame(Symbol=out[["Symbol"]],
+                        Bid.Price=as.numeric(paste0(out[["BidBigNumber"]],
                                                     out[["BidPip"]])),
                         Ask.Price=as.numeric(paste0(out[["OfferBigNumber"]],
                                                     out[["OfferPip"]])),
@@ -234,14 +232,14 @@ ParseTrueFX <- function(x, pretty=TRUE) {
                         Open=as.numeric(out[["Open"]]),
                         TimeStamp=as.POSIXct(as.numeric(out$TimeStamp) / 1000, 
                                              origin='1970-01-01', tz='GMT'),
-                        row.names=out[["Symbol"]], stringsAsFactors=FALSE))
+                        stringsAsFactors=FALSE))
     }
   }
   # Otherwise, it's a concatenated string
   npairs <- nchar(gsub("[0-9.#]", "", x)) / 7
   .ReadSection <- function(string, by) {
     end <- by * npairs
-    substring(string, seq(1, end, by), seq(by, end, by))
+    if (end > 0) substring(string, seq(1, end, by), seq(by, end, by))
   }
   # See page 3 of
   #http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf
@@ -259,7 +257,8 @@ ParseTrueFX <- function(x, pretty=TRUE) {
     return(out)
   }
   out <- lapply(out, gsub, pattern="#", replacement=0)  
-  data.frame(Bid.Price=as.numeric(paste0(out[["BidBigNumber"]],
+  data.frame(Symbol=out[["Symbol"]],
+             Bid.Price=as.numeric(paste0(out[["BidBigNumber"]],
                                          out[["BidPip"]])),
              Ask.Price=as.numeric(paste0(out[["OfferBigNumber"]],
                                          out[["OfferPip"]])),
@@ -267,7 +266,7 @@ ParseTrueFX <- function(x, pretty=TRUE) {
              Low=as.numeric(out[["Low"]]),
              TimeStamp=as.POSIXct(as.numeric(out$TimeStamp) / 1000, 
                                   origin='1970-01-01', tz='GMT'),
-             row.names=out[["Symbol"]])
+             stringsAsFactors=FALSE)
 }
 
 
