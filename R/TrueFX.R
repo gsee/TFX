@@ -263,7 +263,8 @@ ReconnectTrueFX <- Reconnect.TFXsession
 #' }
 #' @export
 #' @rdname QueryTrueFX
-QueryTrueFX <- function(session, parse.response=TRUE, pretty=TRUE, reconnect=TRUE) {
+QueryTrueFX <- function(session, parse.response=TRUE, pretty=TRUE, 
+    reconnect=TRUE) {
   if (missing(session)) {
     if (isTRUE(parse.response)) {
       return(ParseTrueFX(readLines(
@@ -277,9 +278,11 @@ QueryTrueFX <- function(session, parse.response=TRUE, pretty=TRUE, reconnect=TRU
   }
   if (session$id == "not authorized") stop("not authorized")
   if (!isActive(session)) {
-    #warning("session is no longer active. Reconnecting ...")
-    session <- Reconnect(session)
-  }
+    if (isTRUE(reconnect)) {
+      #warning("session is no longer active. Reconnecting ...")
+      session <- Reconnect(session)
+    } else stop("'session' is not connected and 'reconnect' is not TRUE")
+  } 
   if (isTRUE(session$snapshot)) {
     session$active <- FALSE
   }
@@ -348,7 +351,8 @@ ParseTrueFX <- function(x, pretty=TRUE) {
     as.numeric(paste0(tmp, sprintf("%03s", as.numeric(pip))))
   }
   
-  if (grepl(",", x)) {  # It's in csv format
+  if (any(grepl(",", x))) {  # It's in csv format
+    x <- x[x != ""]
     if (!isTRUE(pretty)) {
       return(as.list(read.csv(text=x, header=FALSE, stringsAsFactors=FALSE, 
                               col.names = c("Symbol", "TimeStamp", 
