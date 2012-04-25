@@ -49,7 +49,7 @@ ConnectTrueFX <- function(currency.pairs, username, password,
     
     session$id <- readLines(URL) #returns the session id
     
-    session$connected.at <- with(session, 
+    session$last.used <- with(session, 
       if (grepl(paste(username, password, sep=":"), id)) {
         session$active <- TRUE
         Sys.time()
@@ -57,65 +57,155 @@ ConnectTrueFX <- function(currency.pairs, username, password,
         NA
       })
     
-    #session$id <- structure(readLines(URL), class='TFXid')
     #session$isActive <- function() {
     #  !is.na(id) && !isTRUE(snapshot) && 
     #    difftime(Sys.time(), connected.at, units='secs') <= 60
     #}
     #environment(session$IsOpen) <- as.environment(session)
         
-    class(session) <- c("TFX", "environment")
+    class(session) <- c("TFXsession", "environment")
     session
   }
 }
 
-is.TFX <- function(x) {
-  inherits(x, 'TFX')
+is.TFXsession <- function(x) {
+  inherits(x, 'TFXsession')
 }
 
 
-DisconnectTrueFX <- function(id) {
-  stopifnot(inherits(id, 'TFX'))
-  id$connected.at <- NA
-  id$active <- FALSE
-  readLines(paste0("http://webrates.truefx.com/rates/connect.html?di=", id))
-  id
+#' Disconnect a session
+#'
+#' Disconnect a session (make it inactive).
+#'
+#' @param x an object to disconnect
+#' @param ... other arguments for methods
+#' @seealso \code{\link{ConnectTrueFX}}, \code{\link{Reconnect}}
+#' @examples
+#' \dontrun{
+#' sess <- ConnectTrueFX(username='JSTrader', password='Ou812')
+#' isActive(sess) #TRUE
+#' Disconnect(sess)
+#' isActive(sess) #FALSE
+#' }
+#' @rdname Disconnect
+#' @export
+Disconnect <- function(x, ...) { UseMethod("Disconnect") }
+
+#' \code{DisconnectTrueFX} is an alias for \code{Disconnect.TFXsession}
+#' @return a disconnected/inactive \code{TFXsession} object
+#'
+#' @rdname Disconnect
+#' @method Disconnect TFXsession
+#' @S3method Disconnect TFXsession
+Disconnect.TFXsession <- function(x, ...) {
+  stopifnot(inherits(x, 'TFXsession'))
+  x$last.used <- NA
+  x$active <- FALSE
+  readLines(paste0("http://webrates.truefx.com/rates/connect.html?di=", 
+                   x$id))
+  x
 }
 
+#' @export
+#' @rdname Disconnect
+DisconnectTrueFX <- Disconnect.TFXsession
 
 
+#' Is a session active?
+#' 
+#' Test to see if a session is active
+#' 
+#' In order for a TFXsession to be active, it must have been authenticated less
+#' than 1 minute ago.  If it was created with \code{snapshot=TRUE} it will
+#' become inactive after it is used once.
+#' @param x an object to test
+#' @param ... other arguments for methods
+#' @note This function assumes that if the session has not been used in 60 
+#' seconds is not active, even though TrueFX sessions actually stay active for
+#' roughly 70 seconds.
+#' @examples
+#' \dontrun{
+#' sess <- ConnectTrueFX("GBP/JPY", username='JSTrader', password='Ou812')
+#' isActive(sess) #TRUE
+#' }
+#' @rdname isActive
+#' @export isActive
 isActive <- function(x, ...) { UseMethod("isActive") }
-isActive.TFX <- function(x, ...) {
-  stopifnot(inherits(x, "TFX"))
+
+#' @return logical
+#' 
+#' @rdname isActive
+#' @method isActive TFXsession
+#' @S3method isActive TFXsession
+isActive.TFXsession <- function(x, ...) {
+  stopifnot(inherits(x, "TFXsession"))
   # A session will terminate immediately after being used if snapshot == TRUE.
-  # A session will also terminate after rought 1 minute of inactivity. 
+  # A session will also terminate after roughly 1 minute of inactivity. 
   # (actually 70 seconds -- I think)
-  !isTRUE(x$snapshot) && !is.na(x$connected.at) && isTRUE(x$active) && 
-    difftime(Sys.time(), x$connected.at, units='secs') <= 60
+
+  isTRUE(x$active) && !is.na(x$last.used) && 
+    difftime(Sys.time(), x$last.used, units='secs') <= 60
 }
 
+
+#' Reconnect a session that is no longer active
+#' 
+#' \code{Reconnect} will create a new session and update the `id` to the new
+#' authenticated id returned by the TrueFX server.
+#'
+#' After roughly 70 seconds, an authenticated TrueFX session will time-out.
+#' Also, a connection made with \code{snapshot=FALSE} will be disconnected after
+#' it is used once.
+#'
+#' A non-active TrueFX session id is treated like an unauthenticated session.
+#'
+#' \code{ReconnectTrueFX} is an alias for \code{Reconnect.TFXsession}
+#' @param x an object to be re-connected
+#' @param ... other args for methods
+#' @examples
+#' ## Cannot run because there may not be an internet connection
+#' \dontrun{
+#' ## You must use your username and password instead of JSTrader and Ou812
+#' sess <- ConnectTrueFX("USD/JPY", username='JSTrader', password='Ou812')
+#' DisconnectTrueFX(sess)
+#' isActive(sess) #FALSE
+#' Reconnect(sess)
+#' isActive(sess) #TRUE
+#' }
+#' @rdname Reconnect
+#' @export Reconnect
 Reconnect <- function(x, ...) { UseMethod("Reconnect") }
-Reconnect.TFX <- function(x, ...) {
-  stopifnot(inherits(x, 'TFX'))
+
+#' @return a \code{TFXsession} object of an active/authenticated session.
+#' 
+#' @rdname Reconnect
+#' @method Reconnect TFXsession
+#' @S3method Reconnect TFXsession
+Reconnect.TFXsession <- function(x, ...) {
+  stopifnot(inherits(x, 'TFXsession'))
   x$id <- readLines(x$URL) #returns the session id
-  x$connected.at <- if (grepl(paste(x$username, x$password, sep=":"), x$id)) { 
+  x$last.used <- if (grepl(paste(x$username, x$password, sep=":"), x$id)) { 
     x$active <- TRUE
     Sys.time() 
   } else { NA }
   x
 }
 
+#' @rdname Reconnect
+#' @export
+ReconnectTrueFX <- Reconnect.TFXsession
+
 
 #' Query TrueFX
 #' 
 #' Create a session with TrueFX and request market data.
 #' 
-#' If no \code{currency.pairs} provided to \code{ConnectTrueFX}, the 15 pairs
-#' for which TrueFX offers historical data will be used.  Note that only 
+#' If no \code{currency.pairs} are provided to \code{ConnectTrueFX}, the 15 
+#' pairs for which TrueFX offers historical data will be used.  Note that only 
 #' the first 10 of these are returned in an unauthenticated session.
 #' 
-#' \code{ConnectTrueFX} will create a \code{TFXid} classed object that can be 
-#' used in calls to \code{QueryTrueFX} to request market data.
+#' \code{ConnectTrueFX} will create a \code{TFXsession} classed object that can 
+#' be used in calls to \code{QueryTrueFX} to request market data.  
 #' 
 #' @param currency.pairs character vector, or comma delimited string of Symbols
 #'   (ISO names) of currency pairs.  (e.g. \dQuote{EUR/USD,AUD/USD}, or 
@@ -130,24 +220,27 @@ Reconnect.TFX <- function(x, ...) {
 #'   Indicates the format for the HTTP Response.
 #' @param snapshot logical.  No incremental updates if \code{TRUE}
 #' 
-#' @param id a \code{TFXid} object created by \code{ConnectTrueFX}.  
+#' @param session a \code{TFXsession} object created by \code{ConnectTrueFX}.  
 #' @param parse.response logical. Should the results be passed through 
 #'   \code{ParseTrueFX} before returning?
 #' @param pretty logical.  Passed to \code{ParseTrueFX}.  Indicates whether to
 #'   format the parsed results and convert to \code{data.frame}. 
 #'   Ignored if \code{parse.response} is not \code{TRUE}
-#' @return \code{ConnectTrueFX} returns a \code{TFXid} object that is a 
+#' @param reconnect logical.  If the TFXsession has timed out, should it be
+#'   reconnected?
+#' @return \code{ConnectTrueFX} returns a \code{TFXsession} object that is a 
 #'   TrueFX server-generated session ID returned with a successful 
 #'   authenticated session request.  It is a colon delimited string with 
 #'   username, password, qualifier, and the time (in milliseconds) that the 
 #'   session was created.  
 #'
-#'   \code{QueryTrueFX} returns the results of a 
-#'   TrueFX request using \code{TFXid} object returned by \code{ConnectTrueFX}
+#'   \code{QueryTrueFX} returns the results of a TrueFX request using 
+#"   \code{TFXsession} object returned by \code{ConnectTrueFX}
 #' @author Garrett See
 #' @references 
 #' \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}
-#' @seealso \code{\link{ParseTrueFX}}, \code{\link{TrueFXRef}}
+#' @seealso \code{\link{ParseTrueFX}}, \code{\link{Reconnect}}, 
+#'   \code{\link{TrueFXRef}}
 #' @note the formal argument start with the same lowercase letter as their 
 #'   corresponding TrueFX Market Data Web Query Parameters
 #' @examples
@@ -169,32 +262,38 @@ Reconnect.TFX <- function(x, ...) {
 #' }
 #' @export
 #' @rdname QueryTrueFX
-QueryTrueFX <- function(TFX, parse.response=TRUE, pretty=TRUE) {
-  if (missing(TFX)) {
+QueryTrueFX <- function(session, parse.response=TRUE, pretty=TRUE, reconnect=TRUE) {
+  if (missing(session)) {
     if (isTRUE(parse.response)) {
       return(ParseTrueFX(readLines(
         "http://webrates.truefx.com/rates/connect.html"), pretty=pretty))
     } else return(readLines("http://webrates.truefx.com/rates/connect.html")) 
   }
-  if (!inherits(TFX, "TFX")) {
-    stop("TFX is not a TFX object created by ConnectTrueFX")
+  if (!inherits(session, "TFXsession")) {
+    stop("session is not a TFXsession object created by ConnectTrueFX")
     # or should it warn and
     # return(readLines("http://webrates.truefx.com/rates/connect.html"))
   }
-  if (TFX$id == "not authorized") stop("not authorized")
-  if (!isActive(TFX)) {
-    #warning("TFX is no longer active. Temporarily Reconnecting ...")
-    TFX <- Reconnect(TFX)
+  if (session$id == "not authorized") stop("not authorized")
+  if (!isActive(session)) {
+    #warning("session is no longer active. Reconnecting ...")
+    session <- Reconnect(session)
   }
+  if (isTRUE(session$snapshot)) {
+    session$active <- FALSE
+  }
+  session$last.used <- Sys.time() 
   ## request
   if (isTRUE(parse.response)) {
     return(ParseTrueFX(readLines(paste0(
-      "http://webrates.truefx.com/rates/connect.html?id=", TFX$id)), 
+      "http://webrates.truefx.com/rates/connect.html?id=", session$id)), 
                        pretty=pretty))
   }
-  readLines(paste0("http://webrates.truefx.com/rates/connect.html?id=", TFX$id))
+  readLines(paste0("http://webrates.truefx.com/rates/connect.html?id=", 
+                   session$id))
   # The next line would disconnect
-  #readLines(paste0("http://webrates.truefx.com/rates/connect.html?di=", TFX))
+  #readLines(paste0("http://webrates.truefx.com/rates/connect.html?di=", 
+  #                 session$id))
 }
 
 #' Parse TrueFX response
