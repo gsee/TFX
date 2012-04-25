@@ -20,38 +20,89 @@ ConnectTrueFX <- function(currency.pairs, username, password,
                     substring(x, nchar(x)-2, nchar(x)), sep="/"), 
               collapse=",")
   base.url <- "http://webrates.truefx.com/rates/connect.html"
+  session <- new.env()
+  
   if (missing(username) || missing(password)) {
     stop("missing username or password.")
   } else {
     URL <- paste0(base.url, 
-           "?u=", username, 
-           "&p=", password, 
-           "&q=", qualifier, 
-           "&c=", cp)
+                  "?u=", username, 
+                  "&p=", password, 
+                  "&q=", qualifier, 
+                  "&c=", cp)
     if (format != 'default') {
       URL <- paste0(URL, "&f=", format)
     }
-    if (isTRUE(snapshot) || tolower(substr(snapshot, 1, 1)) == "y") {
+    session$snapshot <- if (isTRUE(snapshot) 
+                           || tolower(substr(snapshot, 1, 1)) == "y") {
       URL <- paste0(URL, "&s=y")
-    }
-    structure(readLines(URL), class='TFXid')#returns the session id
+      TRUE
+    } else FALSE
+    
+    #session$call <- match.call() 
+    session$URL <- URL
+    session$currency.pairs <- currency.pairs
+    session$username <- username
+    session$password <- password
+    session$qualifier <- qualifier
+    session$format <- format
+    
+    session$id <- readLines(URL) #returns the session id
+    
+    session$connected.at <- with(session, 
+      if (grepl(paste(username, password, sep=":"), id)) {
+        session$active <- TRUE
+        Sys.time()
+      } else {
+        NA
+      })
+    
+    #session$id <- structure(readLines(URL), class='TFXid')
+    #session$isActive <- function() {
+    #  !is.na(id) && !isTRUE(snapshot) && 
+    #    difftime(Sys.time(), connected.at, units='secs') <= 60
+    #}
+    #environment(session$IsOpen) <- as.environment(session)
+        
+    class(session) <- c("TFX", "environment")
+    session
   }
 }
 
-is.TFXid <- function(x) {
-  inherits(x, 'TFXid')
+is.TFX <- function(x) {
+  inherits(x, 'TFX')
 }
 
-# This should disconnect a session; however, it is not advisable to use it
-# because a request with a sessionID that has been disconnected will not fail,
-# but instead will return the response of an unauthenticated session without
-# warning or error.  In a future release, the TFXid object will keep track of
-# whether it has been closed (as well as other info, like which currency.pairs
-# are associated with it)
+
 DisconnectTrueFX <- function(id) {
-  stopifnot(inherits(id, 'TFXid'))
+  stopifnot(inherits(id, 'TFX'))
+  id$connected.at <- NA
+  id$active <- FALSE
   readLines(paste0("http://webrates.truefx.com/rates/connect.html?di=", id))
   id
+}
+
+
+
+isActive <- function(x, ...) { UseMethod("isActive") }
+isActive.TFX <- function(x, ...) {
+  stopifnot(inherits(x, "TFX"))
+  # A session will terminate immediately after being used if snapshot == TRUE.
+  # A session will also terminate after rought 1 minute of inactivity. 
+  # (actually 70 seconds -- I think)
+  !isTRUE(x$snapshot) && !is.na(x$connected.at) && isTRUE(x$active) && 
+    difftime(Sys.time(), x$connected.at, units='secs') <= 60
+}
+
+Reconnect <- function(x, ...) { UseMethod("Reconnect") }
+Reconnect.TFX <- function(x, ...) {
+  stopifnot(inherits(x, 'TFX'))
+  x$id <- readLines(x$URL) #returns the session id
+  x$connected.at <- if (grepl(paste(x$username, x$password, sep=":"), x$id)) { 
+    x$active <- TRUE
+    Sys.time() 
+  } else { NA }
+  x
 }
 
 
@@ -118,29 +169,33 @@ DisconnectTrueFX <- function(id) {
 #' }
 #' @export
 #' @rdname QueryTrueFX
-QueryTrueFX <- function(id, parse.response=TRUE, pretty=TRUE) {
-  if (missing(id)) {
+QueryTrueFX <- function(TFX, parse.response=TRUE, pretty=TRUE) {
+  if (missing(TFX)) {
     if (isTRUE(parse.response)) {
       return(ParseTrueFX(readLines(
         "http://webrates.truefx.com/rates/connect.html"), pretty=pretty))
     } else return(readLines("http://webrates.truefx.com/rates/connect.html")) 
   }
-  if (!inherits(id, "TFXid")) {
-    stop("id is not a TFXid object created by ConnectTrueFX")
+  if (!inherits(TFX, "TFX")) {
+    stop("TFX is not a TFX object created by ConnectTrueFX")
     # or should it warn and
     # return(readLines("http://webrates.truefx.com/rates/connect.html"))
   }
-  if (id == "not authorized") stop("not authorized")
+  if (TFX$id == "not authorized") stop("not authorized")
+  if (!isActive(TFX)) {
+    #warning("TFX is no longer active. Temporarily Reconnecting ...")
+    TFX <- Reconnect(TFX)
+  }
   ## request
   if (isTRUE(parse.response)) {
     return(ParseTrueFX(readLines(paste0(
-      "http://webrates.truefx.com/rates/connect.html?id=", id)), pretty=pretty))
+      "http://webrates.truefx.com/rates/connect.html?id=", TFX$id)), 
+                       pretty=pretty))
   }
-  readLines(paste0("http://webrates.truefx.com/rates/connect.html?id=", id))
+  readLines(paste0("http://webrates.truefx.com/rates/connect.html?id=", TFX$id))
   # The next line would disconnect
-  #readLines(paste0("http://webrates.truefx.com/rates/connect.html?di=", id))
+  #readLines(paste0("http://webrates.truefx.com/rates/connect.html?di=", TFX))
 }
-
 
 #' Parse TrueFX response
 #' 
