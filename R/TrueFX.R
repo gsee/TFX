@@ -15,6 +15,7 @@ ConnectTrueFX <- function(currency.pairs, username, password,
                         "AUD/JPY", "AUD/NZD", "CAD/JPY", "CHF/JPY", "NZD/USD")
     ## However, an unauthenticated request only returns the first 10 of those
   }
+  stopifnot(is.character(currency.pairs))
   x <- unlist(strsplit(gsub(" ", "", currency.pairs), ","))
   cp <- paste(paste(substring(x, 1, 3), 
                     substring(x, nchar(x)-2, nchar(x)), sep="/"), 
