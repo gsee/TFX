@@ -348,7 +348,7 @@ ParseTrueFX <- function(x, pretty=TRUE) {
       loc <- -grep("\\.", tmp)
       # if it doesn't have a dot, add one at the end
       tmp[loc] <- paste0(tmp[loc], ".")
-    as.numeric(paste0(tmp, sprintf("%03s", as.numeric(pip))))
+    as.numeric(paste0(tmp, gsub(" ", 0, sprintf("%03s", as.numeric(pip)))))
   }
   
   if (any(grepl(",", x))) {  # It's in csv format
@@ -370,6 +370,7 @@ ParseTrueFX <- function(x, pretty=TRUE) {
         Ask.Price = PasteFigurePip(tmp[["OfferBigNumber"]], tmp[["OfferPip"]]),
         High = tmp[["High"]],
         Low = tmp[["Low"]],
+        Open = tmp[["Open"]],
         TimeStamp = as.POSIXct(as.numeric(tmp[["TimeStamp"]]) / 1000, 
                                origin='1970-01-01', tz='GMT'), 
         stringsAsFactors=FALSE))
