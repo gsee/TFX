@@ -1,14 +1,11 @@
 \name{Disconnect}
 \alias{Disconnect}
 \alias{Disconnect.TFXsession}
-\alias{DisconnectTrueFX}
 \title{Disconnect a session}
 \usage{
   Disconnect(x, ...)
 
   \method{Disconnect}{TFXsession} (x, ...)
-
-  DisconnectTrueFX(x, ...)
 }
 \arguments{
   \item{x}{an object to disconnect}
@@ -20,9 +17,6 @@
 }
 \description{
   Disconnect a session (make it inactive).
-
-  \code{DisconnectTrueFX} is an alias for
-  \code{Disconnect.TFXsession}
 }
 \examples{
 \dontrun{

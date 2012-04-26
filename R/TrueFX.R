@@ -92,7 +92,6 @@ is.TFXsession <- function(x) {
 #' @export
 Disconnect <- function(x, ...) { UseMethod("Disconnect") }
 
-#' \code{DisconnectTrueFX} is an alias for \code{Disconnect.TFXsession}
 #' @return a disconnected/inactive \code{TFXsession} object
 #'
 #' @rdname Disconnect
@@ -106,10 +105,6 @@ Disconnect.TFXsession <- function(x, ...) {
                    x$id))
   x
 }
-
-#' @export
-#' @rdname Disconnect
-DisconnectTrueFX <- Disconnect.TFXsession
 
 
 #' Is a session active?
@@ -160,7 +155,6 @@ isActive.TFXsession <- function(x, ...) {
 #'
 #' A non-active TrueFX session id is treated like an unauthenticated session.
 #'
-#' \code{ReconnectTrueFX} is an alias for \code{Reconnect.TFXsession}
 #' @param x an object to be re-connected
 #' @param ... other args for methods
 #' @examples
@@ -168,7 +162,7 @@ isActive.TFXsession <- function(x, ...) {
 #' \dontrun{
 #' ## You must use your username and password instead of JSTrader and Ou812
 #' sess <- ConnectTrueFX("USD/JPY", username='JSTrader', password='Ou812')
-#' DisconnectTrueFX(sess)
+#' Disconnect(sess)
 #' isActive(sess) #FALSE
 #' Reconnect(sess)
 #' isActive(sess) #TRUE
@@ -192,10 +186,6 @@ Reconnect.TFXsession <- function(x, ...) {
   x
 }
 
-#' @rdname Reconnect
-#' @export
-ReconnectTrueFX <- Reconnect.TFXsession
-
 
 #' Query TrueFX
 #' 
@@ -208,6 +198,14 @@ ReconnectTrueFX <- Reconnect.TFXsession
 #' \code{ConnectTrueFX} will create a \code{TFXsession} classed object that can 
 #' be used in calls to \code{QueryTrueFX} to request market data.  
 #' 
+#' Of the three \code{format}s, \dQuote{default} is the most timely (updates 
+#' first)and \dQuote{csv} is the most delayed (updates last)
+#' 
+#' the \dQuote{csv} and \dQuote{html} formats have the \dQuote{High} and 
+#' \dQuote{Low} columns backwards. (\dQuote{default} does not).  This may be 
+#' corrected for in a future release if the TrueFX Web service doesn't correct 
+#' it first.
+#'
 #' @param currency.pairs character vector, or comma delimited string of Symbols
 #'   (ISO names) of currency pairs.  (e.g. \dQuote{EUR/USD,AUD/USD}, or 
 #'   \code{c("EUR/USD", "AUD/USD")})

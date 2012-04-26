@@ -1,14 +1,11 @@
 \name{Reconnect}
 \alias{Reconnect}
 \alias{Reconnect.TFXsession}
-\alias{ReconnectTrueFX}
 \title{Reconnect a session that is no longer active}
 \usage{
   Reconnect(x, ...)
 
   \method{Reconnect}{TFXsession} (x, ...)
-
-  ReconnectTrueFX(x, ...)
 }
 \arguments{
   \item{x}{an object to be re-connected}
@@ -32,16 +29,13 @@
 
   A non-active TrueFX session id is treated like an
   unauthenticated session.
-
-  \code{ReconnectTrueFX} is an alias for
-  \code{Reconnect.TFXsession}
 }
 \examples{
 ## Cannot run because there may not be an internet connection
 \dontrun{
 ## You must use your username and password instead of JSTrader and Ou812
 sess <- ConnectTrueFX("USD/JPY", username='JSTrader', password='Ou812')
-DisconnectTrueFX(sess)
+Disconnect(sess)
 isActive(sess) #FALSE
 Reconnect(sess)
 isActive(sess) #TRUE

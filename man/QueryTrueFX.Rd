@@ -69,6 +69,16 @@
   \code{ConnectTrueFX} will create a \code{TFXsession}
   classed object that can be used in calls to
   \code{QueryTrueFX} to request market data.
+
+  Of the three \code{format}s, \dQuote{default} is the most
+  timely (updates first)and \dQuote{csv} is the most
+  delayed (updates last)
+
+  the \dQuote{csv} and \dQuote{html} formats have the
+  \dQuote{High} and \dQuote{Low} columns backwards.
+  (\dQuote{default} does not).  This may be corrected for
+  in a future release if the TrueFX Web service doesn't
+  correct it first.
 }
 \note{
   the formal argument start with the same lowercase letter

@@ -28,18 +28,22 @@
   authethenticated TrueFX session and requesting data:
 
   \code{\link{ConnectTrueFX}} is used to request a
-  \code{TFXid} object which is a session ID needed to make
-  a data request.
+  \code{TFXsession} object which has a session ID needed to
+  make a data request.
 
   \code{\link{QueryTrueFX}} will request market data from
-  TrueFX using a \code{TFXid} object that was created by
-  \code{ConnectTrueFX}
+  TrueFX using a \code{TFXsession} object that was created
+  by \code{ConnectTrueFX}
 
   \code{\link{ParseTrueFX}} will parse the results returned
   by \code{QueryTrueFX} into something that is easier to
   work with.
 
-  This package does not yet support streaming data.
+  There are also functions to \code{\link{Disconnect}} and
+  \code{\link{Reconnect}} a \code{TFXsession}
+
+  This package does not yet have explicit support streaming
+  data.
 
   In addition to real time data, TrueFX also offers
   historical data since 2009.
@@ -64,7 +68,7 @@
   download all available data, convert it to \code{xts} and
   save it to disk in binary files that are split by day
   such that \code{FinancialInstrument:::getSymbols.FI} can
-  easily read read them.
+  easily read them.
 
   Some version of that script may make its way into a
   future release of this package.
