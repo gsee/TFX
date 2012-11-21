@@ -2,7 +2,7 @@ Package: TrueFX
 Type: Package
 Title: R API to TrueFX
 Version: 0.1.0
-Date: $Date$
+Date: 2012-11-21
 Author: Garrett See
 Maintainer: Garrett See <gsee000@gmail.com>
 Description: Connects R to TrueFX for free streaming real-time and historical
