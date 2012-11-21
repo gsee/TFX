@@ -17,7 +17,7 @@
 #' A registered TrueFX account with a confirmed username is required to create 
 #' an authenticated session (TrueFX accounts are free).  
 #'
-#' There are typically three steps to creating an authethenticated TrueFX
+#' There are typically three steps to creating an authenticated TrueFX
 #' session and requesting data:
 #' 
 #' \code{\link{ConnectTrueFX}} is used to request a \code{TFXsession} object 
@@ -62,6 +62,7 @@
 #' @author Garrett See \email{gsee000@@gmail.com}
 #' @references 
 #' \url{http://www.truefx.com}
+#'
 #' \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}
 #' @keywords package programming IO
 #' @examples
@@ -76,5 +77,8 @@
 #' QueryTrueFX(id)
 #' 
 #' browseURL(paste0("http://webrates.truefx.com/rates/connect.html?id=", id))
+#'
+#' #view the Web API Developer Guide:
+#' TrueFXRef()
 #' }
 NA

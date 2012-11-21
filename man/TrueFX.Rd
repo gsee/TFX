@@ -25,7 +25,7 @@
   accounts are free).
 
   There are typically three steps to creating an
-  authethenticated TrueFX session and requesting data:
+  authenticated TrueFX session and requesting data:
 
   \code{\link{ConnectTrueFX}} is used to request a
   \code{TFXsession} object which has a session ID needed to
@@ -85,6 +85,9 @@ id <- ConnectTrueFX("EUR/USD,AUD/JPY", u='JSTrader', p='Ou812', f='html')
 QueryTrueFX(id)
 
 browseURL(paste0("http://webrates.truefx.com/rates/connect.html?id=", id))
+
+#view the Web API Developer Guide:
+TrueFXRef()
 }
 }
 \author{
@@ -92,6 +95,7 @@ browseURL(paste0("http://webrates.truefx.com/rates/connect.html?id=", id))
 }
 \references{
   \url{http://www.truefx.com}
+
   \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}
 }
 \keyword{IO}

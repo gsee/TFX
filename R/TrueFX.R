@@ -207,7 +207,7 @@ Reconnect.TFXsession <- function(x, ...) {
 #' it first.
 #'
 #' @param currency.pairs character vector, or comma delimited string of Symbols
-#'   (ISO names) of currency pairs.  (e.g. \dQuote{EUR/USD,AUD/USD}, or 
+#'   (ISO names) of currency pairs.  (e.g. \code{"EUR/USD,AUD/USD"}, or 
 #'   \code{c("EUR/USD", "AUD/USD")})
 #' @param username character.  A registered TrueFX user name; required to 
 #'   establish an authenticated session.
@@ -258,6 +258,13 @@ Reconnect.TFXsession <- function(x, ...) {
 #' 
 #' QueryTrueFX(ConnectTrueFX(username='JSTrader', password='Ou812', 
 #'                           format='html'), parse=FALSE)
+#'
+#' ## If you have shiny installed 
+#' ## install.packages("shiny", repos="http://rstudio.org/_packages")
+#' library(shiny)
+#' runGist("4122626") 
+#' ## view the code for this shiny app at 
+#' #browseURL("https://gist.github.com/4122626")
 #' }
 #' @export
 #' @rdname QueryTrueFX
