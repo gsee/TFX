@@ -8,7 +8,8 @@ ConnectTrueFX <- function(currency.pairs, username, password,
     warning("unrecognized format. Using default")
     format <- 'default'
   }
-  if (missing(currency.pairs)) {
+  if (missing(currency.pairs) || 
+      (!missing(currency.pairs) && nchar(currency.pairs) < 1)) {
     ## If missing, use the 15 pairs for which TrueFX offers historical data
     currency.pairs <- c("EUR/USD", "USD/JPY", "GBP/USD", "EUR/GBP", "USD/CHF", 
                         "EUR/JPY", "EUR/CHF", "USD/CAD", "AUD/USD", "GBP/JPY", 
@@ -208,7 +209,10 @@ Reconnect.TFXsession <- function(x, ...) {
 #'
 #' @param currency.pairs character vector, or comma delimited string of Symbols
 #'   (ISO names) of currency pairs.  (e.g. \code{"EUR/USD,AUD/USD"}, or 
-#'   \code{c("EUR/USD", "AUD/USD")})
+#'   \code{c("EUR/USD", "AUD/USD")}).  If \code{missing} or if 
+#'   \code{nchar(currency.pairs) < 1}, the Symbols of all currency pairs for
+#'   which TrueFX provides historical data will be used (see references 
+#'   section).
 #' @param username character.  A registered TrueFX user name; required to 
 #'   establish an authenticated session.
 #' @param password character. A registered TrueFX password; required to 
@@ -238,9 +242,12 @@ Reconnect.TFXsession <- function(x, ...) {
 #' @author Garrett See
 #' @references 
 #' \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}
+#'
+#' \url{http://truefx.com/?page=downloads} to see for which pairs TrueFX 
+#'   provides historical data.
 #' @seealso \code{\link{ParseTrueFX}}, \code{\link{Reconnect}}, 
 #'   \code{\link{TrueFXRef}}
-#' @note the formal argument start with the same lowercase letter as their 
+#' @note the formal arguments start with the same lowercase letter as their 
 #'   corresponding TrueFX Market Data Web Query Parameters
 #' @examples
 #' ## Cannot run these because there may not be an internet connection

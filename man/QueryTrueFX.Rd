@@ -13,7 +13,10 @@
   \item{currency.pairs}{character vector, or comma
   delimited string of Symbols (ISO names) of currency
   pairs.  (e.g. \code{"EUR/USD,AUD/USD"}, or
-  \code{c("EUR/USD", "AUD/USD")})}
+  \code{c("EUR/USD", "AUD/USD")}).  If \code{missing} or if
+  \code{nchar(currency.pairs) < 1}, the Symbols of all
+  currency pairs for which TrueFX provides historical data
+  will be used (see references section).}
 
   \item{username}{character.  A registered TrueFX user
   name; required to establish an authenticated session.}
@@ -81,7 +84,7 @@
   correct it first.
 }
 \note{
-  the formal argument start with the same lowercase letter
+  the formal arguments start with the same lowercase letter
   as their corresponding TrueFX Market Data Web Query
   Parameters
 }
@@ -115,6 +118,9 @@ runGist("4122626")
 }
 \references{
   \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}
+
+  \url{http://truefx.com/?page=downloads} to see for which
+  pairs TrueFX provides historical data.
 }
 \seealso{
   \code{\link{ParseTrueFX}}, \code{\link{Reconnect}},
