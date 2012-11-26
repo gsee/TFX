@@ -45,9 +45,10 @@
   There are also functions to \code{\link{Disconnect}} and
   \code{\link{Reconnect}} a \code{TFXsession}
 
-  This package does not yet have explicit support streaming
-  data, but it can be accomplished a few different ways,
-  one of which would be to use a \code{while} loop.
+  This package does not yet have explicit support for
+  streaming data, but it can be accomplished a few
+  different ways, one of which would be to use a
+  \code{while} loop.
 
   In addition to real time data, TrueFX(tm) also offers
   historical data since 2009.
