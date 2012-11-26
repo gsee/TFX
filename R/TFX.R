@@ -244,12 +244,12 @@ Reconnect.TFXsession <- function(x, ...) {
 #' @references 
 #' \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}
 #'
-#' \url{http://truefx.com/?page=downloads} to see for which pairs TrueFX 
+#' \url{http://truefx.com/?page=downloads} to see for which pairs TrueFX(tm) 
 #'   provides historical data.
 #' @seealso \code{\link{ParseTrueFX}}, \code{\link{Reconnect}}, 
 #'   \code{\link{TrueFXRef}}
 #' @note the formal arguments start with the same lowercase letter as their 
-#'   corresponding TrueFX Market Data Web Query Parameters
+#'   corresponding TrueFX(tm) Market Data Web Query Parameters
 #' @examples
 #' ## Cannot run these because there may not be an internet connection
 #' \dontrun{

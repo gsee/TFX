@@ -85,7 +85,7 @@
 }
 \note{
   the formal arguments start with the same lowercase letter
-  as their corresponding TrueFX Market Data Web Query
+  as their corresponding TrueFX(tm) Market Data Web Query
   Parameters
 }
 \examples{
@@ -120,7 +120,7 @@ runGist("4122626")
   \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}
 
   \url{http://truefx.com/?page=downloads} to see for which
-  pairs TrueFX provides historical data.
+  pairs TrueFX(tm) provides historical data.
 }
 \seealso{
   \code{\link{ParseTrueFX}}, \code{\link{Reconnect}},
