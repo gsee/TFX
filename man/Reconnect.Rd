@@ -18,16 +18,16 @@
 }
 \description{
   \code{Reconnect} will create a new session and update the
-  `id` to the new authenticated id returned by the TrueFX
-  server.
+  `id` to the new authenticated id returned by the
+  TrueFX(tm) server.
 }
 \details{
-  After roughly 70 seconds, an authenticated TrueFX session
-  will time-out. Also, a connection made with
+  After roughly 70 seconds, an authenticated TrueFX(tm)
+  session will time-out. Also, a connection made with
   \code{snapshot=FALSE} will be disconnected after it is
   used once.
 
-  A non-active TrueFX session id is treated like an
+  A non-active TrueFX(tm) session id is treated like an
   unauthenticated session.
 }
 \examples{

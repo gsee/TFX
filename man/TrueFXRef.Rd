@@ -1,6 +1,6 @@
 \name{TrueFXRef}
 \alias{TrueFXRef}
-\title{Download and view the TrueFX Market Data Web API Developer Guide}
+\title{Download and view the TrueFX(tm) Market Data Web API Developer Guide}
 \usage{
   TrueFXRef(show = c("pdf", "webpage"))
 }
@@ -11,11 +11,11 @@
   be numeric: 1 for \dQuote{pdf}, 2 for \dQuote{webpage})}
 }
 \value{
-  called for side-effect.  Opens the TrueFX Market Data Web
-  API Developer Guide in a pdf-viewer or web browser.
+  called for side-effect.  Opens the TrueFX(tm) Market Data
+  Web API Developer Guide in a pdf-viewer or web browser.
 }
 \description{
-  Download and view the TrueFX Market Data Web API
+  Download and view the TrueFX(tm) Market Data Web API
   Developer Guide
 }
 \note{

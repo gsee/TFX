@@ -10,7 +10,7 @@ ConnectTrueFX <- function(currency.pairs, username, password,
   }
   if (missing(currency.pairs) || 
       (!missing(currency.pairs) && nchar(currency.pairs) < 1)) {
-    ## If missing, use the 15 pairs for which TrueFX offers historical data
+    ## If missing, use the 15 pairs for which TrueFX(tm) offers historical data
     currency.pairs <- c("EUR/USD", "USD/JPY", "GBP/USD", "EUR/GBP", "USD/CHF", 
                         "EUR/JPY", "EUR/CHF", "USD/CAD", "AUD/USD", "GBP/JPY", 
                         "AUD/JPY", "AUD/NZD", "CAD/JPY", "CHF/JPY", "NZD/USD")
@@ -118,8 +118,8 @@ Disconnect.TFXsession <- function(x, ...) {
 #' @param x an object to test
 #' @param ... other arguments for methods
 #' @note This function assumes that if the session has not been used in 60 
-#' seconds is not active, even though TrueFX sessions actually stay active for
-#' roughly 70 seconds.
+#' seconds is not active, even though TrueFX(tm) sessions actually stay active 
+#' for roughly 70 seconds.
 #' @examples
 #' \dontrun{
 #' sess <- ConnectTrueFX("GBP/JPY", username='JSTrader', password='Ou812')
@@ -148,13 +148,14 @@ isActive.TFXsession <- function(x, ...) {
 #' Reconnect a session that is no longer active
 #' 
 #' \code{Reconnect} will create a new session and update the `id` to the new
-#' authenticated id returned by the TrueFX server.
+#' authenticated id returned by the TrueFX(tm) server.
 #'
-#' After roughly 70 seconds, an authenticated TrueFX session will time-out.
+#' After roughly 70 seconds, an authenticated TrueFX(tm) session will time-out.
 #' Also, a connection made with \code{snapshot=FALSE} will be disconnected after
 #' it is used once.
 #'
-#' A non-active TrueFX session id is treated like an unauthenticated session.
+#' A non-active TrueFX(tm) session id is treated like an unauthenticated 
+#' session.
 #'
 #' @param x an object to be re-connected
 #' @param ... other args for methods
@@ -188,13 +189,13 @@ Reconnect.TFXsession <- function(x, ...) {
 }
 
 
-#' Query TrueFX
+#' Query TrueFX(tm)
 #' 
-#' Create a session with TrueFX and request market data.
+#' Create a session with TrueFX(tm) and request market data.
 #' 
 #' If no \code{currency.pairs} are provided to \code{ConnectTrueFX}, the 15 
-#' pairs for which TrueFX offers historical data will be used.  Note that only 
-#' the first 10 of these are returned in an unauthenticated session.
+#' pairs for which TrueFX(tm) offers historical data will be used.  Note that 
+#' only the first 10 of these are returned in an unauthenticated session.
 #' 
 #' \code{ConnectTrueFX} will create a \code{TFXsession} classed object that can 
 #' be used in calls to \code{QueryTrueFX} to request market data.  
@@ -204,18 +205,18 @@ Reconnect.TFXsession <- function(x, ...) {
 #' 
 #' the \dQuote{csv} and \dQuote{html} formats have the \dQuote{High} and 
 #' \dQuote{Low} columns backwards. (\dQuote{default} does not).  This may be 
-#' corrected for in a future release if the TrueFX Web service doesn't correct 
-#' it first.
+#' corrected for in a future release if the TrueFX(tm) Web service doesn't 
+#' correct it first.
 #'
 #' @param currency.pairs character vector, or comma delimited string of Symbols
 #'   (ISO names) of currency pairs.  (e.g. \code{"EUR/USD,AUD/USD"}, or 
 #'   \code{c("EUR/USD", "AUD/USD")}).  If \code{missing} or if 
 #'   \code{nchar(currency.pairs) < 1}, the Symbols of all currency pairs for
-#'   which TrueFX provides historical data will be used (see references 
+#'   which TrueFX(tm) provides historical data will be used (see references 
 #'   section).
-#' @param username character.  A registered TrueFX user name; required to 
+#' @param username character.  A registered TrueFX(tm) user name; required to 
 #'   establish an authenticated session.
-#' @param password character. A registered TrueFX password; required to 
+#' @param password character. A registered TrueFX(tm) password; required to 
 #'   establish an authenticated session
 #' @param qualifier any string; required to establish an authenticated session.
 #'   (\dQuote{default} by default)
@@ -232,12 +233,12 @@ Reconnect.TFXsession <- function(x, ...) {
 #' @param reconnect logical.  If the TFXsession has timed out, should it be
 #'   reconnected?
 #' @return \code{ConnectTrueFX} returns a \code{TFXsession} object that is a 
-#'   TrueFX server-generated session ID returned with a successful 
+#'   TrueFX(tm) server-generated session ID returned with a successful 
 #'   authenticated session request.  It is a colon delimited string with 
 #'   username, password, qualifier, and the time (in milliseconds) that the 
 #'   session was created.  
 #'
-#'   \code{QueryTrueFX} returns the results of a TrueFX request using 
+#'   \code{QueryTrueFX} returns the results of a TrueFX(tm) request using 
 #"   \code{TFXsession} object returned by \code{ConnectTrueFX}
 #' @author Garrett See
 #' @references 
@@ -312,19 +313,19 @@ QueryTrueFX <- function(session, parse.response=TRUE, pretty=TRUE,
   #                 session$id))
 }
 
-#' Parse TrueFX response
+#' Parse TrueFX(tm) response
 #' 
-#' Parse the results of a TrueFX query.  
+#' Parse the results of a TrueFX(tm) query.  
 #' 
 #' This function will parse the results of a call to \code{\link{QueryTrueFX}}. 
-#' It can handle any of the three TrueFX response formats: \dQuote{default}, 
+#' It can handle any of the three TrueFX(tm) response formats: \dQuote{default}, 
 #' \dQuote{csv}, or \dQuote{html}.  By default, it will convert the results 
 #' into a nicely formatted \code{data.frame}.  If, called with 
 #' \code{pretty=FALSE}, a list of strings will be returned.
 #' 
 #' All times are in GMT
 #' 
-#' @param x The response from a TrueFX request.  Can be any of the three
+#' @param x The response from a TrueFX(tm) request.  Can be any of the three
 #'   formats: \code{default}, \code{csv} or \code{html}
 #' @param pretty logical. If \code{TRUE} (Default), output will be converted to 
 #'   a data.frame and columns will be converted from character to the 
@@ -341,8 +342,8 @@ QueryTrueFX <- function(session, parse.response=TRUE, pretty=TRUE,
 #' @references 
 #' \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}
 #' @seealso \code{\link{QueryTrueFX}}, \code{\link{TrueFXRef}}
-#' @note Although the TrueFX Market Data Web API Developer Guide indicates that
-#'   both the \dQuote{csv} and \dQuote{html} formats include values for 
+#' @note Although the TrueFX(tm) Market Data Web API Developer Guide indicates 
+#'   that both the \dQuote{csv} and \dQuote{html} formats include values for 
 #'   \dQuote{Open}, only the \dQuote{html} format actually does.
 #' @examples 
 #' # x <- QueryTrueFX()  #Cannot run this if no internet connection

@@ -1,4 +1,4 @@
-#' Download and view the TrueFX Market Data Web API Developer Guide
+#' Download and view the TrueFX(tm) Market Data Web API Developer Guide
 #' @author Garrett See
 #' @note the idea for this function came from the \pkg{IBrokers} function 
 #' \code{IBrokersRef} written by Jeff Ryan. Thanks Jeff!
@@ -6,7 +6,7 @@
 #'   (\dQuote{web} and \dQuote{url} will also be recognized as 
 #'   \dQuote{webpage}).
 #'   Alternatively, can be numeric: 1 for \dQuote{pdf}, 2 for \dQuote{webpage})
-#' @return called for side-effect.  Opens the TrueFX Market Data Web API 
+#' @return called for side-effect.  Opens the TrueFX(tm) Market Data Web API 
 #'   Developer Guide in a pdf-viewer or web browser.
 #' @references 
 #' \url{http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf}

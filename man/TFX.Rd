@@ -1,39 +1,42 @@
 \docType{package}
-\name{TrueFX}
-\alias{TrueFX}
-\alias{TrueFX-package}
-\title{TrueFX package: An \R interface to the TrueFX Market Data Web API}
+\name{TFX}
+\alias{TFX}
+\alias{TFX-package}
+\title{TFX package: An \R interface to the TrueFX(tm) Market Data Web API}
 \description{
-  \emph{This software is in no way affiliated, endorsed, or
-  approved by TrueFX or any of its affiliates.} The
-  \pkg{TrueFX} package provides functions to access the
-  free, real-time, top-of-book, dealable, interbank foreign
-  exchange rate quotes provided by TrueFX.
+  \emph{TrueFX(tm) is a brand name that is owned by
+  Integral Development Corp. This software is in no way
+  affiliated, endorsed, or approved by TrueFX(tm), Integral
+  Development Corp, or any of its affiliates.} The
+  \pkg{TFX} package provides functions to access the free,
+  real-time, top-of-book, dealable, interbank foreign
+  exchange rate quotes provided by TrueFX(tm).
 }
 \details{
   The Web API can be accessed with an authenticated or an
-  unauthenticated session.  The following is from TrueFX
-  Market Data Web API Developer Guide: "Unauthenticated
-  requests ... return a default response in the form of a
-  snapshot session that includes data for all currency
-  pairs... Unauthenticated requests do not support the more
-  powerful query-based functionality, including incremental
-  responses containing only the changed currency pairs."
+  unauthenticated session.  The following is from
+  TrueFX(tm) Market Data Web API Developer Guide:
+  "Unauthenticated requests ... return a default response
+  in the form of a snapshot session that includes data for
+  all currency pairs... Unauthenticated requests do not
+  support the more powerful query-based functionality,
+  including incremental responses containing only the
+  changed currency pairs."
 
-  A registered TrueFX account with a confirmed username is
-  required to create an authenticated session (TrueFX
-  accounts are free).
+  A registered TrueFX(tm) account with a confirmed username
+  is required to create an authenticated session
+  (TrueFX(tm) accounts are free).
 
   There are typically three steps to creating an
-  authenticated TrueFX session and requesting data:
+  authenticated TrueFX(tm) session and requesting data:
 
   \code{\link{ConnectTrueFX}} is used to request a
   \code{TFXsession} object which has a session ID needed to
   make a data request.
 
   \code{\link{QueryTrueFX}} will request market data from
-  TrueFX using a \code{TFXsession} object that was created
-  by \code{ConnectTrueFX}
+  TrueFX(tm) using a \code{TFXsession} object that was
+  created by \code{ConnectTrueFX}
 
   \code{\link{ParseTrueFX}} will parse the results returned
   by \code{QueryTrueFX} into something that is easier to
@@ -43,12 +46,13 @@
   \code{\link{Reconnect}} a \code{TFXsession}
 
   This package does not yet have explicit support streaming
-  data.
+  data, but it can be accomplished a few different ways,
+  one of which would be to use a \code{while} loop.
 
-  In addition to real time data, TrueFX also offers
+  In addition to real time data, TrueFX(tm) also offers
   historical data since 2009.
 
-  From the TrueFX website, "TrueFX is the first service
+  From the TrueFX(tm) website, "TrueFX is the first service
   that brings you real, dealable prices from real market
   participants from all the major market makers, with
   absolutely no intermediary. As a technology company, we
@@ -79,7 +83,7 @@
 QueryTrueFX()
 QueryTrueFX(pretty=FALSE)
 
-## Must have a TrueFX account to run the following (Membership is free)
+## Must have a TrueFX(tm) account to run the following (Membership is free)
 ## Replace JSTrader and Ou812 with your username and password, respectively
 id <- ConnectTrueFX("EUR/USD,AUD/JPY", u='JSTrader', p='Ou812', f='html')
 QueryTrueFX(id)

@@ -1,12 +1,12 @@
 \name{ParseTrueFX}
 \alias{ParseTrueFX}
-\title{Parse TrueFX response}
+\title{Parse TrueFX(tm) response}
 \usage{
   ParseTrueFX(x, pretty = TRUE)
 }
 \arguments{
-  \item{x}{The response from a TrueFX request.  Can be any
-  of the three formats: \code{default}, \code{csv} or
+  \item{x}{The response from a TrueFX(tm) request.  Can be
+  any of the three formats: \code{default}, \code{csv} or
   \code{html}}
 
   \item{pretty}{logical. If \code{TRUE} (Default), output
@@ -28,24 +28,24 @@
   \dQuote{Open} column
 }
 \description{
-  Parse the results of a TrueFX query.
+  Parse the results of a TrueFX(tm) query.
 }
 \details{
   This function will parse the results of a call to
   \code{\link{QueryTrueFX}}. It can handle any of the three
-  TrueFX response formats: \dQuote{default}, \dQuote{csv},
-  or \dQuote{html}.  By default, it will convert the
-  results into a nicely formatted \code{data.frame}.  If,
-  called with \code{pretty=FALSE}, a list of strings will
-  be returned.
+  TrueFX(tm) response formats: \dQuote{default},
+  \dQuote{csv}, or \dQuote{html}.  By default, it will
+  convert the results into a nicely formatted
+  \code{data.frame}.  If, called with \code{pretty=FALSE},
+  a list of strings will be returned.
 
   All times are in GMT
 }
 \note{
-  Although the TrueFX Market Data Web API Developer Guide
-  indicates that both the \dQuote{csv} and \dQuote{html}
-  formats include values for \dQuote{Open}, only the
-  \dQuote{html} format actually does.
+  Although the TrueFX(tm) Market Data Web API Developer
+  Guide indicates that both the \dQuote{csv} and
+  \dQuote{html} formats include values for \dQuote{Open},
+  only the \dQuote{html} format actually does.
 }
 \examples{
 # x <- QueryTrueFX()  #Cannot run this if no internet connection

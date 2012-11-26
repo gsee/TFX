@@ -1,7 +1,7 @@
 \name{ConnectTrueFX}
 \alias{ConnectTrueFX}
 \alias{QueryTrueFX}
-\title{Query TrueFX}
+\title{Query TrueFX(tm)}
 \usage{
   ConnectTrueFX(currency.pairs, username, password,
     qualifier = "default", format, snapshot = FALSE)
@@ -15,14 +15,14 @@
   pairs.  (e.g. \code{"EUR/USD,AUD/USD"}, or
   \code{c("EUR/USD", "AUD/USD")}).  If \code{missing} or if
   \code{nchar(currency.pairs) < 1}, the Symbols of all
-  currency pairs for which TrueFX provides historical data
-  will be used (see references section).}
+  currency pairs for which TrueFX(tm) provides historical
+  data will be used (see references section).}
 
-  \item{username}{character.  A registered TrueFX user
+  \item{username}{character.  A registered TrueFX(tm) user
   name; required to establish an authenticated session.}
 
-  \item{password}{character. A registered TrueFX password;
-  required to establish an authenticated session}
+  \item{password}{character. A registered TrueFX(tm)
+  password; required to establish an authenticated session}
 
   \item{qualifier}{any string; required to establish an
   authenticated session.  (\dQuote{default} by default)}
@@ -50,21 +50,21 @@
 }
 \value{
   \code{ConnectTrueFX} returns a \code{TFXsession} object
-  that is a TrueFX server-generated session ID returned
+  that is a TrueFX(tm) server-generated session ID returned
   with a successful authenticated session request.  It is a
   colon delimited string with username, password,
   qualifier, and the time (in milliseconds) that the
   session was created.
 
-  \code{QueryTrueFX} returns the results of a TrueFX
+  \code{QueryTrueFX} returns the results of a TrueFX(tm)
   request using
 }
 \description{
-  Create a session with TrueFX and request market data.
+  Create a session with TrueFX(tm) and request market data.
 }
 \details{
   If no \code{currency.pairs} are provided to
-  \code{ConnectTrueFX}, the 15 pairs for which TrueFX
+  \code{ConnectTrueFX}, the 15 pairs for which TrueFX(tm)
   offers historical data will be used.  Note that only the
   first 10 of these are returned in an unauthenticated
   session.
@@ -80,7 +80,7 @@
   the \dQuote{csv} and \dQuote{html} formats have the
   \dQuote{High} and \dQuote{Low} columns backwards.
   (\dQuote{default} does not).  This may be corrected for
-  in a future release if the TrueFX Web service doesn't
+  in a future release if the TrueFX(tm) Web service doesn't
   correct it first.
 }
 \note{

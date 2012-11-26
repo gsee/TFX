@@ -26,7 +26,7 @@
 }
 \note{
   This function assumes that if the session has not been
-  used in 60 seconds is not active, even though TrueFX
+  used in 60 seconds is not active, even though TrueFX(tm)
   sessions actually stay active for roughly 70 seconds.
 }
 \examples{
