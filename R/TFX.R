@@ -74,6 +74,26 @@ is.TFXsession <- function(x) {
   inherits(x, 'TFXsession')
 }
 
+#' TFXsession class print method
+#' 
+#' @method print TFXsession
+#' @S3method print TFXsession
+#' @keywords internal
+print.TFXsession <- function(x, ...) {
+  x$active <- if (isActive(x)) TRUE else FALSE
+  cat("<TFXsession ", tail(strsplit(x$id, ":")[[1L]], 1L), ">\n", sep="")
+  L <- as.list(x)
+  L$currency.pairs <- paste(L$currency.pairs, collapse=",")
+  L$currency.pairs <- unlist(strsplit(L$currency.pairs, ","))
+  L$last.used <- format(L$last.used, "%Y-%m-%d %H:%M:%OS %Z")
+  str(L[c("currency.pairs", "qualifier", "active", "snapshot", 
+          "format", "last.used")], give.head=FALSE, give.attr=FALSE, 
+      no.list=TRUE, vec.len=15) #, strict.width="wrap", indent.str="               ")
+  ## I would rather use strict.width='wrap', but the way that is implemented 
+  ## destroys the whitespace between the component names and the colon which 
+  ## means that the colons would no longer line up in the output
+}
+
 
 #' Disconnect a session
 #'

@@ -1,0 +1,11 @@
+Changes in Version 0.1.1
+========================
+
+NEW FEATURES AND FUNCTIONS
+--------------------------
+
+* There is a print() method for objects of class TFXsession.  When a TFXsession
+  object is printed, the username and password are not printed.  A TFXsession
+  object is just an environment.  So, you can still view things that are not
+  printed by using either ls.str() or as.list() on the TFXsession object.
+

@@ -1,8 +1,8 @@
 Package: TFX
 Type: Package
 Title: R API to TrueFX(tm)
-Version: 0.1.0
-Date: 2012-11-26
+Version: 0.1.1
+Date: 2012-11-28
 Author: Garrett See
 Maintainer: Garrett See <gsee000@gmail.com>
 Description: Connects R to TrueFX(tm) for free streaming real-time and
