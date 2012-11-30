@@ -9,3 +9,12 @@ NEW FEATURES AND FUNCTIONS
   object is just an environment.  So, you can still view things that are not
   printed by using either ls.str() or as.list() on the TFXsession object.
 
+USER VISIBLE CHANGES
+--------------------
+
+* ConnectTrueFX(), Disconnect(), and Reconnect() return the TFXsession object
+  _invisibly_.  That is, the TFXsession object is no longer printed when these
+  functions are called without assinging the result.
+
+* ConnectTrueFX() will give a more informative error if called with a bad 
+  username or password.

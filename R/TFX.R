@@ -41,15 +41,18 @@ ConnectTrueFX <- function(currency.pairs, username, password,
       TRUE
     } else FALSE
     
+    id <- readLines(URL) #returns the session id
+    if (grepl("not authorized", id)) {
+      stop("Not an authorized username or password")
+    }
     #session$call <- match.call() 
     session$URL <- URL
     session$currency.pairs <- currency.pairs
     session$username <- username
     session$password <- password
     session$qualifier <- qualifier
-    session$format <- format
-    
-    session$id <- readLines(URL) #returns the session id
+    session$format <- format    
+    session$id <- id
     
     session$last.used <- with(session, 
       if (grepl(paste(username, password, sep=":"), id)) {
@@ -66,7 +69,7 @@ ConnectTrueFX <- function(currency.pairs, username, password,
     #environment(session$IsOpen) <- as.environment(session)
         
     class(session) <- c("TFXsession", "environment")
-    session
+    invisible(session)
   }
 }
 
@@ -124,7 +127,7 @@ Disconnect.TFXsession <- function(x, ...) {
   x$active <- FALSE
   readLines(paste0("http://webrates.truefx.com/rates/connect.html?di=", 
                    x$id))
-  x
+  invisible(x)
 }
 
 
@@ -205,7 +208,7 @@ Reconnect.TFXsession <- function(x, ...) {
     x$active <- TRUE
     Sys.time() 
   } else { NA }
-  x
+  invisible(x)
 }
 
 
