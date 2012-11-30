@@ -3,6 +3,9 @@
 #' @rdname QueryTrueFX
 ConnectTrueFX <- function(currency.pairs, username, password, 
                           qualifier='default', format, snapshot=FALSE) {
+  if (!grepl("^[a-zA-Z0-9]+$", qualifier)) {
+    stop("'qualifier' can only contain letters and numbers")
+  }    
   if (missing(format)) format <- "default"
   if (!substr(format[[1L]], 1, 1) %in% c("d", "c", "h")) {
     warning("unrecognized format. Using default")

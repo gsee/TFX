@@ -18,3 +18,5 @@ USER VISIBLE CHANGES
 
 * ConnectTrueFX() will give a more informative error if called with a bad 
   username or password.
+
+* ConnectTrueFX() will check to make sure `qualifier` is valid.
