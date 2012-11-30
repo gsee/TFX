@@ -41,12 +41,6 @@
 
   All times are in GMT
 }
-\note{
-  Although the TrueFX(tm) Market Data Web API Developer
-  Guide indicates that both the \dQuote{csv} and
-  \dQuote{html} formats include values for \dQuote{Open},
-  only the \dQuote{html} format actually does.
-}
 \examples{
 # x <- QueryTrueFX()  #Cannot run this if no internet connection
 x <- paste0("EUR/USDUSD/JPY1.31#81.9085661.31#81.9435941.31990#81.6421.3182",
