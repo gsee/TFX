@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>TFX: An R interface to the TrueFX&trade; Web API</title>
+<title>TFX: An R Interface to the TrueFX&trade; Web API</title>
 
 <style type="text/css">
 body, td {
@@ -178,7 +178,7 @@ hljs.initHighlightingOnLoad();
 </head>
 
 <body>
-<h1>TFX: An R interface to the TrueFX&trade; Web API</h1>
+<h1>TFX: An R Interface to the TrueFX&trade; Web API</h1>
 
 <p><strong>Garrett See</strong></p>
 
@@ -202,16 +202,16 @@ QueryTrueFX()
 </code></pre>
 
 <pre><code>##     Symbol Bid.Price Ask.Price      High       Low               TimeStamp
-## 1  EUR/USD   1.29923   1.29928   1.29987   1.29838 2012-12-02 23:31:27.750
-## 2  USD/JPY  82.48900  82.49300  82.50500  82.35300 2012-12-02 23:31:25.118
-## 3  GBP/USD   1.60211   1.60218   1.60281   1.60112 2012-12-02 23:31:25.924
-## 4  EUR/GBP   0.81091   0.81101   0.81168   0.81035 2012-12-02 23:31:26.415
-## 5  USD/CHF   0.92766   0.92779   0.92843   0.92698 2012-12-02 23:31:27.505
-## 6  EUR/JPY 107.17100 107.18100 107.18900 106.91200 2012-12-02 23:31:25.851
-## 7  EUR/CHF   1.20521   1.20541   1.20569   1.20472 2012-12-02 23:31:25.492
-## 8  USD/CAD   0.99407   0.99420   0.99461   0.99297 2012-12-02 23:31:17.497
-## 9  AUD/USD   1.04231   1.04239   1.04341   1.04193 2012-12-02 23:31:27.355
-## 10 GBP/JPY 132.15600 132.16900 132.20100 131.88700 2012-12-02 23:31:27.522
+## 1  EUR/USD   1.30394   1.30398   1.30476   1.29838 2012-12-03 02:31:25.507
+## 2  USD/JPY  82.38800  82.39200  82.50800  82.32500 2012-12-03 02:31:26.434
+## 3  GBP/USD   1.60403   1.60410   1.60486   1.60112 2012-12-03 02:31:28.147
+## 4  EUR/GBP   0.81289   0.81299   0.81309   0.81035 2012-12-03 02:31:25.851
+## 5  USD/CHF   0.92464   0.92475   0.92843   0.92439 2012-12-03 02:31:26.403
+## 6  EUR/JPY 107.43000 107.43900 107.50700 106.91200 2012-12-03 02:31:28.311
+## 7  EUR/CHF   1.20560   1.20580   1.20623   1.20472 2012-12-03 02:31:25.802
+## 8  USD/CAD   0.99234   0.99244   0.99461   0.99212 2012-12-03 02:31:27.665
+## 9  AUD/USD   1.04126   1.04134   1.04341   1.03932 2012-12-03 02:31:25.404
+## 10 GBP/JPY 132.15900 132.16300 132.26100 131.88700 2012-12-03 02:31:28.147
 </code></pre>
 
 <p><em>Note: if you don&#39;t see millisecond resolution, set <code>options(digits.secs=3)</code> or higher</em></p>
@@ -257,12 +257,12 @@ QueryTrueFX(yen)
 </code></pre>
 
 <pre><code>##    Symbol Bid.Price Ask.Price    High     Low               TimeStamp
-## 1 USD/JPY    82.489    82.493  82.505  82.353 2012-12-02 23:31:29.311
-## 2 EUR/JPY   107.171   107.181 107.189 106.912 2012-12-02 23:31:25.851
-## 3 GBP/JPY   132.156   132.169 132.201 131.887 2012-12-02 23:31:27.522
-## 4 AUD/JPY    85.980    85.990  86.011  85.871 2012-12-02 23:31:26.509
-## 5 CAD/JPY    82.971    82.984  82.996  82.825 2012-12-02 23:31:25.336
-## 6 CHF/JPY    88.914    88.927  88.945  88.700 2012-12-02 23:31:28.328
+## 1 USD/JPY    82.388    82.392  82.508  82.325 2012-12-03 02:31:26.434
+## 2 EUR/JPY   107.430   107.439 107.507 106.912 2012-12-03 02:31:28.311
+## 3 GBP/JPY   132.159   132.163 132.261 131.887 2012-12-03 02:31:28.147
+## 4 AUD/JPY    85.787    85.797  86.011  85.578 2012-12-03 02:31:26.380
+## 5 CAD/JPY    83.015    83.026  83.052  82.825 2012-12-03 02:31:29.348
+## 6 CHF/JPY    89.096    89.109  89.144  88.700 2012-12-03 02:31:28.536
 </code></pre>
 
 <p>If you pass an empty string (<code>&quot;&quot;</code>) to the <code>currency.pairs</code> argument, 
@@ -276,21 +276,21 @@ which you can view in your pdf viewer by calling <code>TrueFXRef()</code>)</p>
 </code></pre>
 
 <pre><code>##     Symbol Bid.Price Ask.Price      High       Low               TimeStamp
-## 1  EUR/USD   1.29923   1.29928   1.29987   1.29838 2012-12-02 23:31:27.750
-## 2  USD/JPY  82.48900  82.49300  82.50500  82.35300 2012-12-02 23:31:29.536
-## 3  GBP/USD   1.60211   1.60218   1.60281   1.60112 2012-12-02 23:31:25.924
-## 4  EUR/GBP   0.81091   0.81101   0.81168   0.81035 2012-12-02 23:31:26.415
-## 5  USD/CHF   0.92766   0.92779   0.92843   0.92698 2012-12-02 23:31:27.505
-## 6  EUR/JPY 107.17400 107.18100 107.18900 106.91200 2012-12-02 23:31:29.526
-## 7  EUR/CHF   1.20521   1.20541   1.20569   1.20472 2012-12-02 23:31:25.492
-## 8  USD/CAD   0.99407   0.99420   0.99461   0.99297 2012-12-02 23:31:17.497
-## 9  AUD/USD   1.04231   1.04239   1.04341   1.04193 2012-12-02 23:31:27.355
-## 10 GBP/JPY 132.15600 132.16900 132.20100 131.88700 2012-12-02 23:31:29.569
-## 11 AUD/JPY  85.98000  85.99000  86.01100  85.87100 2012-12-02 23:31:26.509
-## 12 AUD/NZD   1.27285   1.27321   1.27334   1.27022 2012-12-02 23:31:27.812
-## 13 CAD/JPY  82.97100  82.98400  82.99600  82.82500 2012-12-02 23:31:25.336
-## 14 CHF/JPY  88.91400  88.92700  88.94500  88.70000 2012-12-02 23:31:28.328
-## 15 NZD/USD   0.81867   0.81887   0.82089   0.81852 2012-12-02 23:31:29.427
+## 1  EUR/USD   1.30394   1.30398   1.30476   1.29838 2012-12-03 02:31:25.507
+## 2  USD/JPY  82.38800  82.39200  82.50800  82.32500 2012-12-03 02:31:26.434
+## 3  GBP/USD   1.60403   1.60410   1.60486   1.60112 2012-12-03 02:31:28.147
+## 4  EUR/GBP   0.81289   0.81299   0.81309   0.81035 2012-12-03 02:31:25.851
+## 5  USD/CHF   0.92464   0.92475   0.92843   0.92439 2012-12-03 02:31:28.592
+## 6  EUR/JPY 107.43000 107.43900 107.50700 106.91200 2012-12-03 02:31:28.311
+## 7  EUR/CHF   1.20560   1.20580   1.20623   1.20472 2012-12-03 02:31:29.384
+## 8  USD/CAD   0.99234   0.99244   0.99461   0.99212 2012-12-03 02:31:27.665
+## 9  AUD/USD   1.04126   1.04134   1.04341   1.03932 2012-12-03 02:31:25.404
+## 10 GBP/JPY 132.15900 132.16300 132.26100 131.88700 2012-12-03 02:31:28.147
+## 11 AUD/JPY  85.78700  85.79700  86.01100  85.57800 2012-12-03 02:31:26.380
+## 12 AUD/NZD   1.27090   1.27116   1.27334   1.27022 2012-12-03 02:31:27.076
+## 13 CAD/JPY  83.01500  83.02600  83.05200  82.82500 2012-12-03 02:31:29.348
+## 14 CHF/JPY  89.09600  89.10900  89.14400  88.70000 2012-12-03 02:31:29.404
+## 15 NZD/USD   0.81921   0.81938   0.82089   0.81703 2012-12-03 02:31:28.227
 </code></pre>
 
 <h3>Retrieve only incremental updates</h3>
@@ -324,7 +324,7 @@ pairs that have values that have changed since the last request.</p>
 sapply(1:20, function(i) nrow(QueryTrueFX(up)))
 </code></pre>
 
-<pre><code>##  [1] 15  5  3  1  1  2  0  2  4  0  0  0  2  1  1  1  0  0  1  0
+<pre><code>##  [1] 15  0  2  0  1  0  1  1  1  0  6  9  4  3  4  1  1  0  2  0
 </code></pre>
 
 <p>The <code>ss</code> connection was created with <code>snapshot=TRUE</code>, so each time it is passed
@@ -367,7 +367,7 @@ immediately disconnected.</p>
 </code></pre>
 
 <pre><code>##    Symbol Bid.Price Ask.Price    High     Low               TimeStamp
-## 1 EUR/USD    1.2992   1.29927 1.29987 1.29838 2012-12-02 23:31:32.802
+## 1 EUR/USD   1.30393   1.30398 1.30476 1.29838 2012-12-03 02:31:31.513
 </code></pre>
 
 <pre><code class="r">QueryTrueFX(eurss, reconnect = FALSE)  # Error; no longer connected
@@ -381,7 +381,7 @@ QueryTrueFX(eurss, reconnect = FALSE)  #disconnected after request
 </code></pre>
 
 <pre><code>##    Symbol Bid.Price Ask.Price    High     Low               TimeStamp
-## 1 EUR/USD   1.29919   1.29927 1.29987 1.29838 2012-12-02 23:31:35.642
+## 1 EUR/USD   1.30393   1.30398 1.30476 1.29838 2012-12-03 02:31:31.513
 </code></pre>
 
 <p>If QueryTrueFX is called with reconnect=TRUE (the default) it will do the 
@@ -397,7 +397,7 @@ re-connection step for you.</p>
 </code></pre>
 
 <pre><code>##    Symbol Bid.Price Ask.Price    High     Low               TimeStamp
-## 1 EUR/USD   1.29919   1.29927 1.29987 1.29838 2012-12-02 23:31:35.642
+## 1 EUR/USD   1.30393   1.30398 1.30476 1.29838 2012-12-03 02:31:31.513
 </code></pre>
 
 <h4>Other ways a session becomes disconnected.</h4>
@@ -451,7 +451,7 @@ response by using <code>parse.response=FALSE</code>.</p>
             parse.response=FALSE)
 </code></pre>
 
-<pre><code>## [1] &quot;USD/CADEUR/JPY0.99107.4071710.99107.4201810.99461107.1890.99297106.91213544910774981354491096419&quot;
+<pre><code>## [1] &quot;USD/CADEUR/JPY0.99107.2344300.99107.2444370.99461107.5070.99212106.91213545018906661354501892466&quot;
 </code></pre>
 
 <p><em>(<code>ParseTrueFX()</code> can be used to make sense of that string)</em></p>
@@ -477,15 +477,15 @@ use <code>parse.response=TRUE</code> (the default) the response will be passed t
             parse.response=FALSE)
 </code></pre>
 
-<pre><code>## [1] &quot;&lt;table&gt;&lt;tr&gt;&lt;td&gt;USD/CAD&lt;/td&gt;&lt;td&gt;1354491069334&lt;/td&gt;&lt;td&gt;0.99&lt;/td&gt;&lt;td&gt;407&lt;/td&gt;&lt;td&gt;0.99&lt;/td&gt;&lt;td&gt;420&lt;/td&gt;&lt;td&gt;0.99297&lt;/td&gt;&lt;td&gt;0.99461&lt;/td&gt;&lt;td&gt;0.99368&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;EUR/JPY&lt;/td&gt;&lt;td&gt;1354491096600&lt;/td&gt;&lt;td&gt;107.&lt;/td&gt;&lt;td&gt;171&lt;/td&gt;&lt;td&gt;107.&lt;/td&gt;&lt;td&gt;181&lt;/td&gt;&lt;td&gt;106.912&lt;/td&gt;&lt;td&gt;107.189&lt;/td&gt;&lt;td&gt;107.019&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;
+<pre><code>## [1] &quot;&lt;table&gt;&lt;tr&gt;&lt;td&gt;USD/CAD&lt;/td&gt;&lt;td&gt;1354501884748&lt;/td&gt;&lt;td&gt;0.99&lt;/td&gt;&lt;td&gt;234&lt;/td&gt;&lt;td&gt;0.99&lt;/td&gt;&lt;td&gt;244&lt;/td&gt;&lt;td&gt;0.99212&lt;/td&gt;&lt;td&gt;0.99461&lt;/td&gt;&lt;td&gt;0.99368&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;EUR/JPY&lt;/td&gt;&lt;td&gt;1354501892466&lt;/td&gt;&lt;td&gt;107.&lt;/td&gt;&lt;td&gt;430&lt;/td&gt;&lt;td&gt;107.&lt;/td&gt;&lt;td&gt;437&lt;/td&gt;&lt;td&gt;106.912&lt;/td&gt;&lt;td&gt;107.507&lt;/td&gt;&lt;td&gt;107.019&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;
 </code></pre>
 
 <pre><code class="r">QueryTrueFX(ConnectTrueFX(&quot;USD/CAD,EUR/JPY&quot;, &#39;JSTrader&#39;, &#39;Ou812&#39;, format=&#39;csv&#39;), 
             parse.response=FALSE)
 </code></pre>
 
-<pre><code>## [1] &quot;USD/CAD,1354491068832,0.99,407,0.99,420,0.99297,0.99461,0.99368&quot;
-## [2] &quot;EUR/JPY,1354491096674,107.,173,107.,181,106.912,107.189,107.019&quot;
+<pre><code>## [1] &quot;USD/CAD,1354501884748,0.99,234,0.99,244,0.99212,0.99461,0.99368&quot;
+## [2] &quot;EUR/JPY,1354501892466,107.,430,107.,437,106.912,107.507,107.019&quot;
 ## [3] &quot;&quot;
 </code></pre>
 
@@ -508,22 +508,22 @@ vectors:</p>
 ## [1] &quot;0.99&quot; &quot;107.&quot;
 ## 
 ## $BidPip
-## [1] &quot;407&quot; &quot;173&quot;
+## [1] &quot;234&quot; &quot;430&quot;
 ## 
 ## $OfferBigNumber
 ## [1] &quot;0.99&quot; &quot;107.&quot;
 ## 
 ## $OfferPip
-## [1] &quot;420&quot; &quot;181&quot;
+## [1] &quot;244&quot; &quot;437&quot;
 ## 
 ## $High
-## [1] &quot;0.99461&quot; &quot;107.189&quot;
+## [1] &quot;0.99461&quot; &quot;107.507&quot;
 ## 
 ## $Low
-## [1] &quot;0.99297&quot; &quot;106.912&quot;
+## [1] &quot;0.99212&quot; &quot;106.912&quot;
 ## 
 ## $TimeStamp
-## [1] &quot;1354491077498&quot; &quot;1354491096674&quot;
+## [1] &quot;1354501890666&quot; &quot;1354501892466&quot;
 </code></pre>
 
 <p>Then, if called with <code>pretty=TRUE</code> (the default), it will convert
@@ -555,17 +555,17 @@ username or password.</p>
 <pre><code class="r">eurss
 </code></pre>
 
-<pre><code>## &lt;TFXsession 1354491095901&gt;
+<pre><code>## &lt;TFXsession 1354501895887&gt;
 ##  $ currency.pairs:&quot;EUR/USD&quot;
 ##  $ qualifier     :&quot;default&quot;
 ##  $ active        :FALSE
 ##  $ snapshot      :TRUE
 ##  $ format        :&quot;default&quot;
-##  $ last.used     :&quot;2012-12-02 17:31:35.884 CST&quot;
+##  $ last.used     :&quot;2012-12-02 20:31:35.679 CST&quot;
 </code></pre>
 
 <p>You can explore a <code>TFXsession</code> object just like any other <code>environment</code>:
-<code>ls</code>, <code>ls.str(eurss)</code>, <code>as.list(eurss)</code>, etc.</p>
+<code>ls</code>, <code>ls.str</code>, <code>as.list</code>, etc.</p>
 
 <pre><code class="r">ls(eurss)
 </code></pre>
@@ -580,7 +580,7 @@ username or password.</p>
 <h1><a name="shiny"><strong>TFX</strong> and <strong>Shiny</strong></a></h1>
 
 <p>RStudio&#39;s <a href="http://www.rstudio.com/shiny/">shiny</a> is <u><em>awesome</em></u>.  If you 
-haven&#39;t yet played with it yet, you should check it out 
+haven&#39;t played with it yet, you should check it out 
 (<a href="http://www.rstudio.com/shiny/">http://www.rstudio.com/shiny/</a>).  </p>
 
 <p>You can install shiny by entering these commands:</p>
