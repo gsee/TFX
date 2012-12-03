@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>TFX: An R interface to the TrueFX&trade; Web API</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>TFX: An R interface to the TrueFX&trade; Web API</h1>
+
+<p><strong>Garrett See</strong></p>
+
+<p>The <a href="http://cran.r-project.org/package=TFX"><strong>TFX</strong> package</a> is available on 
+<a href="http://cran.r-project.org">CRAN</a>.</p>
+
+<pre><code class="r"># CRAN version
+install.packages(&quot;TFX&quot;)
+# development version
+#install.packages(&quot;TFX&quot;, repos=&quot;http://r-forge.r-project.org&quot;)  
+</code></pre>
+
+<h2>Unauthenticated Session</h2>
+
+<p>The <strong>TFX</strong> package is a simple interface to the TrueFX&trade; Web API.  If you 
+call <code>QueryTrueFX()</code> with its defaults, it will create an unauthenticated session
+and return quotes for 10 currency pairs.  (All timestamps are in GMT.)</p>
+
+<pre><code class="r">library(TFX)
+QueryTrueFX()
+</code></pre>
+
+<pre><code>##     Symbol Bid.Price Ask.Price      High       Low               TimeStamp
+## 1  EUR/USD   1.29923   1.29928   1.29987   1.29838 2012-12-02 23:31:27.750
+## 2  USD/JPY  82.48900  82.49300  82.50500  82.35300 2012-12-02 23:31:25.118
+## 3  GBP/USD   1.60211   1.60218   1.60281   1.60112 2012-12-02 23:31:25.924
+## 4  EUR/GBP   0.81091   0.81101   0.81168   0.81035 2012-12-02 23:31:26.415
+## 5  USD/CHF   0.92766   0.92779   0.92843   0.92698 2012-12-02 23:31:27.505
+## 6  EUR/JPY 107.17100 107.18100 107.18900 106.91200 2012-12-02 23:31:25.851
+## 7  EUR/CHF   1.20521   1.20541   1.20569   1.20472 2012-12-02 23:31:25.492
+## 8  USD/CAD   0.99407   0.99420   0.99461   0.99297 2012-12-02 23:31:17.497
+## 9  AUD/USD   1.04231   1.04239   1.04341   1.04193 2012-12-02 23:31:27.355
+## 10 GBP/JPY 132.15600 132.16900 132.20100 131.88700 2012-12-02 23:31:27.522
+</code></pre>
+
+<p><em>Note: if you don&#39;t see millisecond resolution, set <code>options(digits.secs=3)</code> or higher</em></p>
+
+<h2>Authenticated Session</h2>
+
+<hr/>
+
+<h4>Benefits of an Authenticated session</h4>
+
+<ul>
+<li>Can request only the pairs that you want.</li>
+<li>Quotes are available for more pairs:  at the time of this writing, there are 
+26 pairs available, but see the <a href="http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf">TrueFX Market Data Web API Developer Guide</a> 
+for the current list.</li>
+<li>Allows you to choose to only receive updates for pairs that have changed since 
+the last request</li>
+<li>Results can be returned in different formats (html or csv). I&#39;m not sure how
+much of a benefit this is (see the <a href="#format">Formats and Parsing section</a>)</li>
+</ul>
+
+<hr/>
+
+<p><em>In order to make customized requests, you must create an authenticated session
+which requires a username and password.</em>  Go to <a href="http://truefx.com/">TrueFX.com</a> 
+to register for a free TrueFX&trade; account; you only need to provide an e-mail 
+address.</p>
+
+<p>I&#39;ll pretend that you chose &ldquo;JSTrader&rdquo; as your username and  &ldquo;Ou812&rdquo; for your
+password because that is the example used in the official 
+<a href="http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf">TrueFX Market Data Web API Developer Guide</a>,
+but you should use your actual, authenticated username and password instead.</p>
+
+<h3>Get data for specific currency pairs</h3>
+
+<p>Once you have a registered username and password, you can create an 
+authenticated session.  With an authenticated session, you can request only the 
+pairs that you want.</p>
+
+<pre><code class="r">yen &lt;- ConnectTrueFX(&quot;USD/JPY,EUR/JPY,GBP/JPY,AUD/JPY,CAD/JPY,CHF/JPY&quot;, 
+                     username=&quot;JSTrader&quot;, password=&quot;Ou812&quot;)
+QueryTrueFX(yen)
+</code></pre>
+
+<pre><code>##    Symbol Bid.Price Ask.Price    High     Low               TimeStamp
+## 1 USD/JPY    82.489    82.493  82.505  82.353 2012-12-02 23:31:29.311
+## 2 EUR/JPY   107.171   107.181 107.189 106.912 2012-12-02 23:31:25.851
+## 3 GBP/JPY   132.156   132.169 132.201 131.887 2012-12-02 23:31:27.522
+## 4 AUD/JPY    85.980    85.990  86.011  85.871 2012-12-02 23:31:26.509
+## 5 CAD/JPY    82.971    82.984  82.996  82.825 2012-12-02 23:31:25.336
+## 6 CHF/JPY    88.914    88.927  88.945  88.700 2012-12-02 23:31:28.328
+</code></pre>
+
+<p>If you pass an empty string (<code>&quot;&quot;</code>) to the <code>currency.pairs</code> argument, 
+the 15 pairs for which TrueFX&trade; provides 
+<a href="http://truefx.com/?page=downloads">historical data</a> will 
+be used (for a full list of <code>currency.pairs</code> available for real-time quotes see 
+the <a href="http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf">TrueFX Market Data Web API Developer Guide</a> 
+which you can view in your pdf viewer by calling <code>TrueFXRef()</code>)</p>
+
+<pre><code class="r">QueryTrueFX(ConnectTrueFX(&quot;&quot;, &quot;JSTrader&quot;, &quot;Ou812&quot;, snapshot=TRUE))
+</code></pre>
+
+<pre><code>##     Symbol Bid.Price Ask.Price      High       Low               TimeStamp
+## 1  EUR/USD   1.29923   1.29928   1.29987   1.29838 2012-12-02 23:31:27.750
+## 2  USD/JPY  82.48900  82.49300  82.50500  82.35300 2012-12-02 23:31:29.536
+## 3  GBP/USD   1.60211   1.60218   1.60281   1.60112 2012-12-02 23:31:25.924
+## 4  EUR/GBP   0.81091   0.81101   0.81168   0.81035 2012-12-02 23:31:26.415
+## 5  USD/CHF   0.92766   0.92779   0.92843   0.92698 2012-12-02 23:31:27.505
+## 6  EUR/JPY 107.17400 107.18100 107.18900 106.91200 2012-12-02 23:31:29.526
+## 7  EUR/CHF   1.20521   1.20541   1.20569   1.20472 2012-12-02 23:31:25.492
+## 8  USD/CAD   0.99407   0.99420   0.99461   0.99297 2012-12-02 23:31:17.497
+## 9  AUD/USD   1.04231   1.04239   1.04341   1.04193 2012-12-02 23:31:27.355
+## 10 GBP/JPY 132.15600 132.16900 132.20100 131.88700 2012-12-02 23:31:29.569
+## 11 AUD/JPY  85.98000  85.99000  86.01100  85.87100 2012-12-02 23:31:26.509
+## 12 AUD/NZD   1.27285   1.27321   1.27334   1.27022 2012-12-02 23:31:27.812
+## 13 CAD/JPY  82.97100  82.98400  82.99600  82.82500 2012-12-02 23:31:25.336
+## 14 CHF/JPY  88.91400  88.92700  88.94500  88.70000 2012-12-02 23:31:28.328
+## 15 NZD/USD   0.81867   0.81887   0.82089   0.81852 2012-12-02 23:31:29.427
+</code></pre>
+
+<h3>Retrieve only incremental updates</h3>
+
+<p>Authenticated sessions retrieve only incremental updates by default.  This can
+be easily demonstrated by creating a session with a lot of symbols and making 
+multiple requests.  You&#39;ll see that an authenticated session does not always 
+return data for all pairs by default.</p>
+
+<p>If <code>ConnectTrueFX</code> is called with <code>snapshot=TRUE</code> (as above), then the session 
+that is created will be disconnected after a request and will have to be 
+reconnected for each request.  By default, the <code>QueryTrueFX</code> function, will 
+automatically reconnect a disconnected session but can be called with 
+<code>reconnect=FALSE</code> if you want to throw an error when there is an attempt to 
+request data with a disconnected session.  Also note that even non-snapshot 
+sessions become disconnected after roughly a minute of inactivity.</p>
+
+<pre><code class="r"># this session gets only incremental updates
+up &lt;- ConnectTrueFX(&quot;&quot;, &quot;JSTrader&quot;, &quot;Ou812&quot;, snapshot=FALSE) 
+# this one is disconnected after a request and will have to be reconnected
+# for a subsequent request.
+ss &lt;- ConnectTrueFX(&quot;&quot;, &quot;JSTrader&quot;, &quot;Ou812&quot;, snapshot=TRUE)
+</code></pre>
+
+<p>Now, make multiple requests and look at how many pairs are updated in each call.</p>
+
+<p>the <code>up</code> session was created with <code>snapshot=FALSE</code> so it only gets updates for 
+pairs that have values that have changed since the last request.</p>
+
+<pre><code class="r"># make 20 requests and count the rows of each response
+sapply(1:20, function(i) nrow(QueryTrueFX(up)))
+</code></pre>
+
+<pre><code>##  [1] 15  5  3  1  1  2  0  2  4  0  0  0  2  1  1  1  0  0  1  0
+</code></pre>
+
+<p>The <code>ss</code> connection was created with <code>snapshot=TRUE</code>, so each time it is passed
+to <code>QueryTrueFX</code> it gets temporarily reconnected.</p>
+
+<pre><code class="r">sapply(1:20, function(i) nrow(QueryTrueFX(ss)))
+</code></pre>
+
+<pre><code>##  [1] 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15
+</code></pre>
+
+<p>Note that the snapshot session is no longer active.</p>
+
+<pre><code class="r">isActive(ss)
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<p>But the other one is still connected</p>
+
+<pre><code class="r">isActive(up)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<h4>The <code>reconnect</code> argument to <code>QueryTrueFX()</code></h4>
+
+<p>Let&#39;s make a new snapshot session that doesn&#39;t have as many pairs just so that
+the output won&#39;t take up as much space</p>
+
+<pre><code class="r">eurss &lt;- ConnectTrueFX(&quot;EUR/USD&quot;, &quot;JSTrader&quot;, &quot;Ou812&quot;, snapshot = TRUE)
+</code></pre>
+
+<p>The first request with a snapshot session returns data and then the session is 
+immediately disconnected.</p>
+
+<pre><code class="r">QueryTrueFX(eurss, reconnect = FALSE)  #after the request, eurss will be disconnected
+</code></pre>
+
+<pre><code>##    Symbol Bid.Price Ask.Price    High     Low               TimeStamp
+## 1 EUR/USD    1.2992   1.29927 1.29987 1.29838 2012-12-02 23:31:32.802
+</code></pre>
+
+<pre><code class="r">QueryTrueFX(eurss, reconnect = FALSE)  # Error; no longer connected
+</code></pre>
+
+<pre><code>## Error: &#39;session&#39; is not connected and &#39;reconnect&#39; is not TRUE
+</code></pre>
+
+<pre><code class="r">Reconnect(eurss)
+QueryTrueFX(eurss, reconnect = FALSE)  #disconnected after request
+</code></pre>
+
+<pre><code>##    Symbol Bid.Price Ask.Price    High     Low               TimeStamp
+## 1 EUR/USD   1.29919   1.29927 1.29987 1.29838 2012-12-02 23:31:35.642
+</code></pre>
+
+<p>If QueryTrueFX is called with reconnect=TRUE (the default) it will do the 
+re-connection step for you.</p>
+
+<pre><code class="r">isActive(eurss)
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">QueryTrueFX(eurss)
+</code></pre>
+
+<pre><code>##    Symbol Bid.Price Ask.Price    High     Low               TimeStamp
+## 1 EUR/USD   1.29919   1.29927 1.29987 1.29838 2012-12-02 23:31:35.642
+</code></pre>
+
+<h4>Other ways a session becomes disconnected.</h4>
+
+<p>A snapshot session terminates after it has been used.  There are two other ways
+for a session to become disconnected (regardless of whether it is a snapshot 
+session or not).</p>
+
+<ol>
+<li>Users can manually disconnect a session with <code>Disconnect()</code></li>
+<li>Sessions time out after roughly one minute and become disconnected.*</li>
+</ol>
+
+<p><em>* technically, sessions timeout in about 70 seconds, but, since this is not 
+   documented in the <a href="http://www.truefx.com/dev/data/TrueFX_MarketDataWebAPI_DeveloperGuide.pdf">Developer Guide</a>, <code>isActive</code> returns
+   <code>FALSE</code> after 60 seconds of inactivity to ensure no false positives</em></p>
+
+<pre><code class="r">isActive(up)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">Disconnect(up)
+isActive(up)
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">Reconnect(up)
+isActive(up)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">#Sys.sleep(70) # session will become inactive after roughly 60 seconds
+#isActive(up) # FALSE
+</code></pre>
+
+<h2><a name="format">Formats and Parsing</a> </h2>
+
+<h3>ParseTrueFX</h3>
+
+<p>By default, <code>QueryTrueFX()</code> will parse the results of a query (by calling 
+<code>ParseTrueFX()</code>) and return a <code>data.frame</code>.  You can choose not to parse the 
+response by using <code>parse.response=FALSE</code>.</p>
+
+<pre><code class="r">QueryTrueFX(ConnectTrueFX(&#39;USD/CAD,EUR/JPY&#39;, &#39;JSTrader&#39;, &#39;Ou812&#39;), 
+            parse.response=FALSE)
+</code></pre>
+
+<pre><code>## [1] &quot;USD/CADEUR/JPY0.99107.4071710.99107.4201810.99461107.1890.99297106.91213544910774981354491096419&quot;
+</code></pre>
+
+<p><em>(<code>ParseTrueFX()</code> can be used to make sense of that string)</em></p>
+
+<h4>The <code>format</code> argument to <code>ConnectTrueFX()</code></h4>
+
+<p>Above you see what TrueFX&trade; returns when you use the <code>&quot;default&quot;</code> format.  My
+advice is to always use the <code>&quot;default&quot;</code> format, because, last I checked, the
+<code>&quot;default&quot;</code> format gets updates before the other formats do.  The next quickest 
+to update is the <code>&quot;html&quot;</code> format, and <code>&quot;csv&quot;</code> is the slowest to update.  The
+one benefit to using <code>&quot;html&quot;</code> or <code>&quot;csv&quot;</code> is that in addition to the columns
+returned when format is <code>&quot;default&quot;</code>, they also return an <code>Open</code> column.
+However, in addition to being delayed relative to the <code>&quot;default&quot;</code> format,
+the values for High and Low are backwards (i.e. <strong>wrong</strong>) for these formats.</p>
+
+<p>For the sake of completeness, let&#39;s look at them anyway.  I&#39;ll use 
+<code>parse.response=FALSE</code> to show the differences in the raw responses.  If you 
+use <code>parse.response=TRUE</code> (the default) the response will be passed through 
+<code>ParseTrueFX()</code> to get a <code>data.frame</code> by default, or a <code>list</code> if 
+<code>pretty=FALSE</code>.</p>
+
+<pre><code class="r">QueryTrueFX(ConnectTrueFX(&quot;USD/CAD,EUR/JPY&quot;, &#39;JSTrader&#39;, &#39;Ou812&#39;, format=&#39;html&#39;), 
+            parse.response=FALSE)
+</code></pre>
+
+<pre><code>## [1] &quot;&lt;table&gt;&lt;tr&gt;&lt;td&gt;USD/CAD&lt;/td&gt;&lt;td&gt;1354491069334&lt;/td&gt;&lt;td&gt;0.99&lt;/td&gt;&lt;td&gt;407&lt;/td&gt;&lt;td&gt;0.99&lt;/td&gt;&lt;td&gt;420&lt;/td&gt;&lt;td&gt;0.99297&lt;/td&gt;&lt;td&gt;0.99461&lt;/td&gt;&lt;td&gt;0.99368&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;EUR/JPY&lt;/td&gt;&lt;td&gt;1354491096600&lt;/td&gt;&lt;td&gt;107.&lt;/td&gt;&lt;td&gt;171&lt;/td&gt;&lt;td&gt;107.&lt;/td&gt;&lt;td&gt;181&lt;/td&gt;&lt;td&gt;106.912&lt;/td&gt;&lt;td&gt;107.189&lt;/td&gt;&lt;td&gt;107.019&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;
+</code></pre>
+
+<pre><code class="r">QueryTrueFX(ConnectTrueFX(&quot;USD/CAD,EUR/JPY&quot;, &#39;JSTrader&#39;, &#39;Ou812&#39;, format=&#39;csv&#39;), 
+            parse.response=FALSE)
+</code></pre>
+
+<pre><code>## [1] &quot;USD/CAD,1354491068832,0.99,407,0.99,420,0.99297,0.99461,0.99368&quot;
+## [2] &quot;EUR/JPY,1354491096674,107.,173,107.,181,106.912,107.189,107.019&quot;
+## [3] &quot;&quot;
+</code></pre>
+
+<p><code>ParseTrueFX()</code> can be used on any of the three formats.  It will determine
+which format it has been given, and parse it appropriately.</p>
+
+<h4>The <code>pretty</code> argument to <code>ParseTrueFX()</code></h4>
+
+<p><code>ParseTrueFX()</code> first splits the input into a <code>list</code> of unprocessed character 
+vectors:</p>
+
+<pre><code class="r">QueryTrueFX(ConnectTrueFX(&#39;USD/CAD,EUR/JPY&#39;, &#39;JSTrader&#39;, &#39;Ou812&#39;), 
+            parse.response=TRUE, pretty=FALSE)
+</code></pre>
+
+<pre><code>## $Symbol
+## [1] &quot;USD/CAD&quot; &quot;EUR/JPY&quot;
+## 
+## $BidBigNumber
+## [1] &quot;0.99&quot; &quot;107.&quot;
+## 
+## $BidPip
+## [1] &quot;407&quot; &quot;173&quot;
+## 
+## $OfferBigNumber
+## [1] &quot;0.99&quot; &quot;107.&quot;
+## 
+## $OfferPip
+## [1] &quot;420&quot; &quot;181&quot;
+## 
+## $High
+## [1] &quot;0.99461&quot; &quot;107.189&quot;
+## 
+## $Low
+## [1] &quot;0.99297&quot; &quot;106.912&quot;
+## 
+## $TimeStamp
+## [1] &quot;1354491077498&quot; &quot;1354491096674&quot;
+</code></pre>
+
+<p>Then, if called with <code>pretty=TRUE</code> (the default), it will convert
+the <code>list</code> to a <code>data.frame</code> &ndash; like those in the previous examples &ndash; 
+converting strings to <code>numeric</code> or <code>POSIXct</code> as necessary.</p>
+
+<h4>The <code>qualifier</code> argument to <code>ConnectTrueFX()</code></h4>
+
+<p>An authenticated session must have a <code>qualifier</code> which can be any alphanumeric 
+string.  The default value for the <code>qualifier</code> argument to <code>ConnectTrueFX()</code> 
+is <code>&quot;default&quot;</code>, although you&#39;re free to use something else.</p>
+
+<pre><code class="r">con &lt;- ConnectTrueFX(&#39;USD/JPY,EUR/JPY&#39;, &#39;JSTrader&#39;, &#39;Ou812&#39;, 
+                     qualifier=&quot;2yen&quot;)
+con$qualifier
+</code></pre>
+
+<pre><code>## [1] &quot;2yen&quot;
+</code></pre>
+
+<h2>TFXsession objects</h2>
+
+<p>A <code>TFXsession</code> object is just an environment that contains the info needed by
+<code>QueryTrueFX()</code>.  There is a <code>print.TFXsession</code> method in version 0.1.1 of 
+<strong>TFX</strong>.  If you are using version 0.1.0, your output will look different.  The
+<code>print.TFXsession</code> method will only print &ldquo;non-private&rdquo; info.  It will not print
+username or password.</p>
+
+<pre><code class="r">eurss
+</code></pre>
+
+<pre><code>## &lt;TFXsession 1354491095901&gt;
+##  $ currency.pairs:&quot;EUR/USD&quot;
+##  $ qualifier     :&quot;default&quot;
+##  $ active        :FALSE
+##  $ snapshot      :TRUE
+##  $ format        :&quot;default&quot;
+##  $ last.used     :&quot;2012-12-02 17:31:35.884 CST&quot;
+</code></pre>
+
+<p>You can explore a <code>TFXsession</code> object just like any other <code>environment</code>:
+<code>ls</code>, <code>ls.str(eurss)</code>, <code>as.list(eurss)</code>, etc.</p>
+
+<pre><code class="r">ls(eurss)
+</code></pre>
+
+<pre><code>##  [1] &quot;active&quot;         &quot;currency.pairs&quot; &quot;format&quot;         &quot;id&quot;            
+##  [5] &quot;last.used&quot;      &quot;password&quot;       &quot;qualifier&quot;      &quot;session&quot;       
+##  [9] &quot;snapshot&quot;       &quot;URL&quot;            &quot;username&quot;
+</code></pre>
+
+<hr/>
+
+<h1><a name="shiny"><strong>TFX</strong> and <strong>Shiny</strong></a></h1>
+
+<p>RStudio&#39;s <a href="http://www.rstudio.com/shiny/">shiny</a> is <u><em>awesome</em></u>.  If you 
+haven&#39;t yet played with it yet, you should check it out 
+(<a href="http://www.rstudio.com/shiny/">http://www.rstudio.com/shiny/</a>).  </p>
+
+<p>You can install shiny by entering these commands:</p>
+
+<pre><code class="r">options(repos = c(RStudio = &quot;http://rstudio.org/_packages&quot;, getOption(&quot;repos&quot;)))
+install.packages(&quot;shiny&quot;)
+</code></pre>
+
+<p>I put together a really simple shiny app that will open a browser and display 
+real-time quotes that update every 750 milliseconds.</p>
+
+<p>You can run the app with:</p>
+
+<pre><code class="r">library(shiny)
+runGist(&quot;4122626&quot;)
+</code></pre>
+
+<p>This shiny app uses an unauthenticated session which means that it always 
+displays the same 10 currency pairs.  However, you can easily modify the code 
+to use an authenticated session using your login credentials.  It could also
+be modified to update more often and/or show milliseconds in the timestamps.
+The code for this shiny app can be viewed or downloaded from 
+<a href="http://gist.github.com/4122626">http://gist.github.com/4122626</a></p>
+
+<hr/>
+
+<h1>Historical Data</h1>
+
+<p>In addition to real-time quotes, TrueFX&trade; also provides historical tick data
+going back to 2009 for 15 currency pairs.</p>
+
+<p>From the TrueFX&trade; website:</p>
+
+<blockquote>
+<p>TrueFX is the first service that brings you real, dealable prices from real 
+market participants from all the major market makers, with absolutely no 
+intermediary. As a technology company, we can offer you historical 
+tick-by-tick market data, at zero cost to you.</p>
+
+<p>This data is top-of-the-book, tick-by-tick market data, with fractional pip 
+spreads in millisecond detail. All timestamps are based on GMT.</p>
+</blockquote>
+
+<p>The data can be downloaded from <a href="http://www.truefx.com/?page=downloads">http://www.truefx.com/?page=downloads</a></p>
+
+<hr/>
+
+<p><em>The <strong>TFX</strong> package is in no way affiliated, endorsed, or approved by 
+TrueFX&trade;, Integral Development Corp, or any of its affiliates.  TrueFX&trade; is 
+a brand name that is owned by Integral Development Corp.</em></p>
+
+</body>
+
+</html>
+

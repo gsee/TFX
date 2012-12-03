@@ -9,6 +9,14 @@ NEW FEATURES AND FUNCTIONS
   object is just an environment.  So, you can still view things that are not
   printed by using either ls.str() or as.list() on the TFXsession object.
 
+* There is a vignette in both pdf and html formats.  The vignette is precompiled 
+  because the Rmd file used to create it contains a registered username. The pdf 
+  version can be viewed with vignette("TFX").  To view the html version, type 
+  help(package='TFX', help_type='html'), and click 
+  "Overview of user guides and package vignettes" or "browse directory".  It can
+  also be viewed with `browseURL(paste0('http://127.0.0.1:', tools:::httpdPort,
+                                        '/library/TFX/doc/TFX.html'))
+
 USER VISIBLE CHANGES
 --------------------
 
@@ -19,4 +27,5 @@ USER VISIBLE CHANGES
 * ConnectTrueFX() will give a more informative error if called with a bad 
   username or password.
 
-* ConnectTrueFX() will check to make sure `qualifier` is valid.
+* ConnectTrueFX() will check to make sure `qualifier` is valid -- can only 
+  contain letters and numbers.

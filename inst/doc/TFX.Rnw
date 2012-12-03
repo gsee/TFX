@@ -1,0 +1,16 @@
+%\VignetteIndexEntry{TFX overview}
+\documentclass{article}
+\begin{document}
+
+This is just a stub.  
+
+The actual vignette was created with a different username
+and password than shown, which makes it not directly reproducible.
+
+The vignette was written using markdown.  The html version of the vignette 
+(system.file("doc/TFX.html", package="TFX")) was created using knitr's knit2html.
+
+The PDF version of the vignette (system.file("doc/TFX.pdf", package="TFX")) 
+was created by using pandoc on the .md file, which was created in the knit2html 
+process.
+\end{document}
